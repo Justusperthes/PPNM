@@ -1,14 +1,27 @@
-Out.txt: main.exe
-	mono main.exe > Out.txt
-	mono $< > $@
+# Makefile
 
-main.exe : main.cs sfuns.dll
-	mcs -target:exe -reference:sfuns.dll -out:main.exe main.cs
+# Compiler
+CSC = mcs
 
-sfuns.dll : sfuns.cs
-	mcs -target:library -out:sfuns.dll sfuns.cs
+# Compiler flags
+CFLAGS = -warn:4
+
+# Source files
+SOURCES = math2.cs
+
+# Executable name
+EXECUTABLE = my_program.exe
+
+# Output file
+OUTPUT_FILE = output.txt
+
+all: $(EXECUTABLE)
+
+$(EXECUTABLE): $(SOURCES)
+    $(CSC) $(CFLAGS) -out:$@ $^
+
+run: $(EXECUTABLE)
+    mono $(EXECUTABLE) > $(OUTPUT_FILE)
 
 clean:
-	$(RM) sfuns.dll main.exe Out.txt
-
-
+    rm -f $(EXECUTABLE) $(OUTPUT_FILE)
