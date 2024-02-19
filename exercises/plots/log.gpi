@@ -1,0 +1,11 @@
+\
+	set terminal svg background "white" ;\
+	set out "Erf.gnuplot.png" ;\
+	set key left ;\
+	set tics out ;\
+	set title "Error function" ;\
+	plot \
+		"Out.txt" with lines notitle \
+		,"erf.data.txt" using 1:2 with points pointtype 6 notitle \
+		,"erf.data.txt" using (-($1)):(-($2)) with points pointtype 6 notitle ;\
+

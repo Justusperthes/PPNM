@@ -1,4 +1,0 @@
-testing some hello stuff
-and some more...
-sqrt2^2 = 2 (should equal 2)
-this is gamma of 9: 40319.9995590969
