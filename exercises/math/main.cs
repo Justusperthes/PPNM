@@ -5,6 +5,7 @@ class Program
 {
         static void Main()
         {	
+		//blahboablah
 		double sqrt2=Sqrt(2.0);
 		double pot1fifth = Pow(2.0,0.2);
 		double eToPi = Pow(E,PI);

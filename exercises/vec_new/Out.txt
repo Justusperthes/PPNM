@@ -1,0 +1,24 @@
+sqrt2^2 = 2 (should equal 2)
+pot1fifth^5 = 2 (should equal 2)
+eToPi = 23.1406926327793 (should equal approx 23)
+piToE = 22.459157718361 (should equal approx 22)
+this is gamma of 1: 0.999999989064903
+this is gamma of 2: 0.999999989064903
+this is gamma of 3: 1.99999997812981
+this is gamma of 4: 5.99999993438942
+this is gamma of 5: 23.9999997375577
+this is gamma of 6: 119.999998687788
+this is gamma of 7: 719.99999212673
+this is gamma of 8: 5039.99994488711
+this is gamma of 9: 40319.9995590969
+this is gamma of 10: 362879.997652016
+this is lngamma of 1: -1.09350976051914E-08
+this is lngamma of 2: -1.09350976051914E-08
+this is lngamma of 3: 0.693147169624848
+this is lngamma of 4: 1.79175945829296
+this is lngamma of 5: 3.17805381941285
+this is lngamma of 6: 4.78749173184695
+this is lngamma of 7: 6.579251201075
+this is lngamma of 8: 8.52516135013032
+this is lngamma of 9: 10.6046028918102
+this is lngamma of 10: 12.8018274736111

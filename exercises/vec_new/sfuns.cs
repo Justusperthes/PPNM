@@ -1,7 +1,7 @@
 using static System.Console;
 using static System.Math;
 
-public static class sfuns
+static public class sfuns
 {	
 	public static double fgamma(double x){
 		///single precision gamma function
@@ -17,3 +17,5 @@ public static class sfuns
 		return lnfgamma;	
 	}
 }
+
+

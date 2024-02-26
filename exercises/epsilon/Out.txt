@@ -1,0 +1,11 @@
+my max int = 2147483647
+my min int = -2147483648
+Pow(2,-52) is 2.22044604925031E-16 and machine epsilon for double is 2.22044604925031E-16
+Pow(2,-23) is 1.19209289550781E-07 and machine epsilon for float is 1.192093E-07
+a==b ? False
+a>1  ? False
+b>1  ? True
+hellod1=7.999999999999999e-001
+d2=8.000000000000000e-001
+d1==d2 ? => False
+True
