@@ -1,5 +1,6 @@
 using static System.Console;
 using System;
+using System.Collections.Generic;
 public static class QRGS{
     static QRGS()
     {
@@ -68,9 +69,32 @@ public static class QRGS{
         vector result = backsub(R,Q.T*b);
         return result;
     }
-    public static int det(){
+    public static double det(matrix A){
     //should return the determinant of matrix R which is 
     //equal to the determinant of the original matrix. 
-        return 0;
+    //For QR-decomposition the determinant is product
+    //of diagonal of R
+        int sizeOfMatrix = A.size1;
+        double result = 1.0;
+        for(int i=0;i < sizeOfMatrix;i++){
+            result = result*A[i,i];
+        }
+        return result;
+    }
+    public static matrix inverse(matrix A){
+        //Solve Ax_1=e_1, Ax_2=e_2,..., Ax_n=e_n.
+        //Put the vectors x_1,...,x_n together as columns in matrix A^-1
+        int sizeOfMatrix = A.size1;
+        List<vector> vectorList = new List<vector>();
+        matrix resultMatrix = new matrix(sizeOfMatrix);
+        //solve each SoLE
+        for(int i =0;i<sizeOfMatrix;i++){
+            vector e = vector.UnitVector(sizeOfMatrix,i);
+            vector resultVector = solve(A,e);
+            vectorList.Add(resultVector);
+            }
+        //create resultMatrix from list of vectors
+        resultMatrix = matrix.fromColumns(vectorList);
+        return resultMatrix;
     }
 }

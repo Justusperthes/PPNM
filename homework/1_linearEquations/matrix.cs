@@ -72,7 +72,6 @@ public static matrix operator/(matrix a, double x){
 			c[i,j]=a[i,j]/x;
 	return c;
 }
-
 public static matrix operator*(double x, matrix a){ return a*x; }
 public static matrix operator*(matrix a, double x){
 	matrix c=new matrix(a.size1,a.size2);
@@ -164,7 +163,33 @@ public void set_zero(){
 		for(int i=0;i<size1;i++)
 			this[i,j]=0;
 	}
+public static matrix fromColumns(List<vector> columns){
+	if (columns.Count == 0)
+	{
+		throw new ArgumentException("List of columns cannot be empty.");
+	}
 
+	int numRows = columns[0].size;
+	int numColumns = columns.Count;
+
+	matrix result = new matrix(numRows, numColumns);
+
+	for (int j = 0; j < numColumns; j++)
+	{
+		vector column = columns[j];
+
+		if (column.size != numRows)
+		{
+			throw new ArgumentException("All columns must have the same size.");
+		}
+
+		for (int i = 0; i < numRows; i++)
+		{
+			result[i, j] = column[i];
+		}
+	}
+	return result;
+}
 public static matrix outer(vector u, vector v){
 	matrix c = new matrix(u.size,v.size);
 	for(int i=0;i<c.size1;i++)for(int j=0;j<c.size2;j++) c[i,j]=u[i]*v[j];
@@ -236,6 +261,5 @@ public bool approx(matrix B,double acc=1e-6, double eps=1e-6){
 				return false;
 	return true;
 }
-
 }//matrix
 

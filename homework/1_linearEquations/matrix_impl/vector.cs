@@ -30,6 +30,13 @@ public vector(string s){
                         }
 	}
 
+public static vector UnitVector(int n, int index)
+{
+    vector v = new vector(n);
+    v[index] = 1;
+    return v;
+}
+
 public static implicit operator vector (double[] a){ return new vector(a); }
 public static implicit operator double[] (vector v){ return v.data; }
 
