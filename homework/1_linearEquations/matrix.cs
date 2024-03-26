@@ -2,6 +2,8 @@
 using System;
 using static System.Math;
 using System.Runtime.CompilerServices;
+using static System.Console;
+using System.Collections.Generic;
 public partial class matrix{
 
 public readonly int size1, size2;
@@ -72,6 +74,7 @@ public static matrix operator/(matrix a, double x){
 			c[i,j]=a[i,j]/x;
 	return c;
 }
+
 public static matrix operator*(double x, matrix a){ return a*x; }
 public static matrix operator*(matrix a, double x){
 	matrix c=new matrix(a.size1,a.size2);
@@ -141,7 +144,35 @@ public static matrix id(int n){
 	for(int i=0;i<n;i++)m[i,i]=1;
 	return m;
 	}
+public static matrix FromColumns(List<vector> columns)
+    {
+        if (columns.Count == 0)
+        {
+            throw new ArgumentException("List of columns cannot be empty.");
+        }
 
+        int numRows = columns[0].size;
+        int numColumns = columns.Count;
+
+        matrix result = new matrix(numRows, numColumns);
+
+        for (int j = 0; j < numColumns; j++)
+        {
+            vector column = columns[j];
+
+            if (column.size != numRows)
+            {
+                throw new ArgumentException("All columns must have the same size.");
+            }
+
+            for (int i = 0; i < numRows; i++)
+            {
+                result[i, j] = column[i];
+            }
+        }
+
+        return result;
+    }
 public void set_identity(){ this.set_unity(); }
 public void set_unity(){
 	for(int i=0;i<size1;i++){
@@ -163,33 +194,7 @@ public void set_zero(){
 		for(int i=0;i<size1;i++)
 			this[i,j]=0;
 	}
-public static matrix fromColumns(List<vector> columns){
-	if (columns.Count == 0)
-	{
-		throw new ArgumentException("List of columns cannot be empty.");
-	}
 
-	int numRows = columns[0].size;
-	int numColumns = columns.Count;
-
-	matrix result = new matrix(numRows, numColumns);
-
-	for (int j = 0; j < numColumns; j++)
-	{
-		vector column = columns[j];
-
-		if (column.size != numRows)
-		{
-			throw new ArgumentException("All columns must have the same size.");
-		}
-
-		for (int i = 0; i < numRows; i++)
-		{
-			result[i, j] = column[i];
-		}
-	}
-	return result;
-}
 public static matrix outer(vector u, vector v){
 	matrix c = new matrix(u.size,v.size);
 	for(int i=0;i<c.size1;i++)for(int j=0;j<c.size2;j++) c[i,j]=u[i]*v[j];
@@ -222,7 +227,31 @@ public matrix submatrix(int ia, int ib, int ja, int jb){
 	for(int j=ja;j<=jb;j++) m[i-ia,j-ja]=this[i,j];
 	return m;
 }
-
+// public static vector backsub(matrix U, vector c){
+// 	//obs: U must be upper triangular
+// 	if(checkUpTri(U)==false){
+// 		vector failVector = new vector(6,6,6);
+// 		return failVector;
+// 	}
+// 	for (int i=c.size-1; i >=0; i--){
+// 		double sum=0;
+// 		for (int k=i+1; k<c.size; k++) sum+=U[i,k]*c[k];
+// 		c[i]=(c[i]-sum)/U[i,i]; } 
+// 		return c;}
+// public static bool checkUpTri(matrix U){
+// 	if(U.size1!=U.size2)
+// 		return false;
+// 	int dim = U.size1;
+// 	for(int k=1; k<dim;k++){ 
+// 		for(int j=0; j<dim-1;j++)
+// 			if(U[k,k-1]!=0){
+// 				System.Console.WriteLine(k);
+// 				System.Console.WriteLine(U[k,0]);
+// 				return false;
+// 				}
+// 			}
+// 	return true;
+// }
 public matrix transpose(){
 	matrix c = new matrix(size2,size1);
 	for(int j=0;j<size2;j++)
@@ -236,7 +265,6 @@ public static void scale(matrix M,double x){
 	for(int i=0;i<M.size1;i++)
 		M[i,j]*=x;
 	}
-
 public void print(string s="",string format="{0,10:g3} "){
 	System.Console.WriteLine(s);
 	for(int ir=0;ir<this.size1;ir++){
@@ -261,5 +289,6 @@ public bool approx(matrix B,double acc=1e-6, double eps=1e-6){
 				return false;
 	return true;
 }
+
 }//matrix
 

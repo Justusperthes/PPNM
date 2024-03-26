@@ -94,7 +94,7 @@ public static class QRGS{
             vectorList.Add(resultVector);
             }
         //create resultMatrix from list of vectors
-        resultMatrix = matrix.fromColumns(vectorList);
+        resultMatrix = matrix.FromColumns(vectorList);
         return resultMatrix;
     }
 }

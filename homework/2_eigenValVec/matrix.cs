@@ -3,6 +3,7 @@ using System;
 using static System.Math;
 using System.Runtime.CompilerServices;
 using static System.Console;
+using System.Collections.Generic;
 public partial class matrix{
 
 public readonly int size1, size2;
@@ -12,7 +13,41 @@ public matrix(int n, int m){
 	size1=n; size2=m; data = new double[size2][];
 	for(int j=0;j<size2;j++) data[j]=new double[size1];
 	}
-public matrix(int n) : this(n,n) {}
+
+public matrix(int n) : this(n,n) {
+	size1=n; 
+	size2=n; 
+	data = new double[size1][];
+	for(int j=0;j<size1;j++) data[j]=new double[size1];
+}
+public void FillWithRandom(double min, double max) {
+    Random random = new Random();
+    for (int i = 0; i < size1; i++) {
+        for (int j = 0; j < size2; j++) {
+            data[i][j] = random.NextDouble() * (max - min) + min;
+        }
+    }
+}
+public void MakeSymmetric(double min, double max) {
+	Random random = new Random();
+	for (int i = 0; i < size1; i++) {
+		data[i][i] = random.NextDouble() * (max - min) + min;
+		for (int j = i+1; j < size2; j++) {
+				double randomNumber = random.NextDouble() * (max - min) + min;
+				data[i][j] = randomNumber;
+				data[j][i] = randomNumber;
+			}
+        }
+}
+/* public matrix(vector v) {
+	n = v.Length();
+	size1=n; 
+	size2=n; 
+	data = new double[size1][];
+	for (int i = 0; i < size; i++) {
+		data[i][i] = v[i];
+	}
+} */
 
 public double this[int r,int c]{
 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -116,6 +151,19 @@ public static vector operator% (matrix a, vector v){
 	return u;
 	}
 
+// public static matrix randomMatrix(int n, double min, double max) : this(n, n) {
+//     size1 = n;
+//     size2 = n;
+//     data = new double[size1][];
+//     Random random = new Random();
+//     for (int i = 0; i < size1; i++) {
+//         data[i] = new double[size2];
+//         for (int j = 0; j < size2; j++) {
+//             data[i][j] = random.NextDouble() * (max - min) + min;
+//         }
+//     }
+// }
+
 public matrix(vector e) : this(e.size,e.size) { for(int i=0;i<e.size;i++)this[i,i]=e[i]; }
 
 public void set(int r, int c, double value){ this[r,c]=value; }
@@ -143,7 +191,35 @@ public static matrix id(int n){
 	for(int i=0;i<n;i++)m[i,i]=1;
 	return m;
 	}
+public static matrix FromColumns(List<vector> columns)
+    {
+        if (columns.Count == 0)
+        {
+            throw new ArgumentException("List of columns cannot be empty.");
+        }
 
+        int numRows = columns[0].size;
+        int numColumns = columns.Count;
+
+        matrix result = new matrix(numRows, numColumns);
+
+        for (int j = 0; j < numColumns; j++)
+        {
+            vector column = columns[j];
+
+            if (column.size != numRows)
+            {
+                throw new ArgumentException("All columns must have the same size.");
+            }
+
+            for (int i = 0; i < numRows; i++)
+            {
+                result[i, j] = column[i];
+            }
+        }
+
+        return result;
+    }
 public void set_identity(){ this.set_unity(); }
 public void set_unity(){
 	for(int i=0;i<size1;i++){

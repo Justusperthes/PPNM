@@ -19,8 +19,8 @@ out2: test.exe
 
 # main.cs is compiled into main.exe while matrix.dll is 
 # referenced (the second dependency in the list: $(word 2,$^))
-main.exe: main.cs matrix.dll QRGS.dll
-	$(CSC) -reference:matrix.dll -reference:QRGS.dll $<
+main.exe: main.cs matrix.dll jacobi.dll
+	$(CSC) -reference:matrix.dll -reference:jacobi.dll $<
 
 # matrix.dll is build from vector.cs and matrix.cs,
 # -target:library means that output should be DLL rather than exe
@@ -28,8 +28,8 @@ main.exe: main.cs matrix.dll QRGS.dll
 matrix.dll : vector.cs matrix.cs
 	$(CSC) -target:library -out:$@ $^
 
-QRGS.dll : QRGS.cs matrix.dll #; $(MKLIB)
-	$(CSC) -reference:matrix.dll -target:library -out:$@ QRGS.cs
+jacobi.dll : jacobi.cs matrix.dll #; $(MKLIB)
+	$(CSC) -reference:matrix.dll -target:library -out:$@ jacobi.cs
 
 test.exe : test.cs
 	$(CSC) $<
