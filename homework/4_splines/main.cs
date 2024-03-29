@@ -3,12 +3,14 @@ class main{
         double[] x = {1.0, 2.0, 3.0, 4.0, 5.0};
         double[] y = {2.0, 3.0, 5.0, 7.0, 11.0};
         double z = 3.5;
-        /* double result = lsplines.linterp(x,y,z);
-        System.Console.WriteLine(result); */
-        /* int find_i = lsplines.binsearch(y,z);
-        System.Console.WriteLine(find_i); */
-        double result = lsplines.linterpInteg(x,y,z);
-        System.Console.WriteLine(result);
+        var my_lspline = new lspline(x,y,z);
+        double integrateResult = my_lspline.integrate();
+        double evalResult = my_lspline.evaluate();
+        System.Console.WriteLine(integrateResult);
+        System.Console.WriteLine(evalResult);
+        var my_qspline = new qspline(x,y,z);
+        double QintegrateResult = my_qspline.Integral();
+        System.Console.WriteLine(QintegrateResult);
     }
 
 }   
