@@ -20,7 +20,7 @@ out2: test.exe
 # main.cs is compiled into main.exe while matrix.dll is 
 # referenced (the second dependency in the list: $(word 2,$^))
 main.exe: main.cs vector.dll RK_integrator.dll
-	$(CSC) -reference:RK_integrator.dll $<
+	$(CSC) -reference:RK_integrator.dll -reference:vector.dll $<
 
 # matrix.dll is build from vector.cs and matrix.cs,
 # -target:library means that output should be DLL rather than exe
