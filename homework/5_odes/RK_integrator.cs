@@ -18,31 +18,33 @@ public class RK_integrator{
         vector yh = y+k1*h;              /* y(x+h) estimate */
         vector δy = (k1-k0)*h;           /* error estimate */
         return (yh,δy);
-    }
+    }//stepper
     public (genlist<double>,genlist<vector>) driver(
         Func<double,vector,vector> F,/* the f from dy/dx=f(x,y) */
         (double,double) interval,    /* (start-point,end-point) */
         vector ystart,               /* y(start-point) */
-        double h=0.125,              /* initial step-size */
-        double acc=0.01,             /* absolute accuracy goal */
-        double eps=0.01              /* relative accuracy goal */
+        double h,              /* initial step-size */
+        double acc,             /* absolute accuracy goal */
+        double eps              /* relative accuracy goal */
     ){
-    var (a,b)=interval; double x=a; vector y=ystart.copy();
-    var xlist=new genlist<double>(); xlist.add(x);
-    var ylist=new genlist<vector>(); ylist.add(y);
-    do{
-        if(x>=b) return (xlist,ylist); /* job done */
-        if(x+h>b) h=b-x;               /* last step should end at b */
-        var (yh,δy) = RKstep12();
-        double tol = (acc+eps*yh.norm()) * Sqrt(h/(b-a));
-        double err = δy.norm();
-            if(err<=tol){ // accept step
-		    x+=h; y=yh;
-		    xlist.add(x);
-		    ylist.add(y);
-		    }
-	    h *= Min( Pow(tol/err,0.25)*0.95 , 2); // readjust stepsize
-        }while(true);
+        
+        var (a,b)=interval; double x=a; vector y=ystart.copy();
+        var xlist=new genlist<double>(); xlist.add(x);
+        var ylist=new genlist<vector>(); ylist.add(y);
+        do{
+            Console.WriteLine($"h = {h}");
+            if(x>=b) return (xlist,ylist); /* job done */
+            if(x+h>b) h=b-x;               /* last step should end at b */
+            var (yh,δy) = RKstep12();
+            double tol = (acc+eps*yh.norm()) * Sqrt(h/(b-a));
+            double err = δy.norm();
+                if(err<=tol){ // accept step
+                x+=h; y=yh;
+                xlist.add(x);
+                ylist.add(y);
+                }
+            h *= Min( Pow(tol/err,0.25)*0.95 , 2); // readjust stepsize
+            }while(true);
     }//driver
     public class genlist<T>{               /* "T" is the type parameter */
         private T[] data;                   /* we keep items in the array "data" */
@@ -55,5 +57,5 @@ public class RK_integrator{
             newdata[size]=item;            /* add the item at the end of the list */
             data=newdata;                  /* old data should be garbage collected, no worry here */
         }
-    }
+    }//genlist class
 }
