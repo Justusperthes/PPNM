@@ -38,4 +38,6 @@ test.exe : test.cs
 # removes .dll and .exe and out. files
 # but where is (RM) actually defined?
 clean:
-	$(RM) *.dll *.exe [Oo]ut*
+	$(RM) *.dll *.exe 
+
+#[Oo]ut*

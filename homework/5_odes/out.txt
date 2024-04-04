@@ -1,0 +1,8 @@
+Inside do loop
+b = 0.1
+h = 0.125
+Inside do loop
+b = 0.1
+h = 0.115830164656945
+0
+0.1

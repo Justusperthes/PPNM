@@ -12,7 +12,7 @@ public class RK_integrator{
         this.y = y; /* the current value y(x) of the sought function */
         this.h = h; /* the step to be taken */
     }
-    public (vector, vector) RKstep12(){
+    public (vector, vector) RKstep12(Func<double,vector,vector> f,double x,vector y,double h){
         vector k0 = f(x,y);              /* embedded lower order formula (Euler) */
         vector k1 = f(x+h/2,y+k0*(h/2)); /* higher order formula (midpoint) */
         vector yh = y+k1*h;              /* y(x+h) estimate */
@@ -27,17 +27,17 @@ public class RK_integrator{
         double acc,             /* absolute accuracy goal */
         double eps              /* relative accuracy goal */
     ){
-        
         var (a,b)=interval; double x=a; vector y=ystart.copy();
         var xlist=new genlist<double>(); xlist.add(x);
         var ylist=new genlist<vector>(); ylist.add(y);
         do{
-            Console.WriteLine($"h = {h}");
+            Console.WriteLine("Inside do loop");
             if(x>=b) return (xlist,ylist); /* job done */
             if(x+h>b) h=b-x;               /* last step should end at b */
-            var (yh,δy) = RKstep12();
+            var (yh,δy) = RKstep12(f,x,y,h);
             double tol = (acc+eps*yh.norm()) * Sqrt(h/(b-a));
             double err = δy.norm();
+            System.Console.WriteLine($"driver: err={err} tol={tol} h={h}");
                 if(err<=tol){ // accept step
                 x+=h; y=yh;
                 xlist.add(x);
@@ -46,16 +46,32 @@ public class RK_integrator{
             h *= Min( Pow(tol/err,0.25)*0.95 , 2); // readjust stepsize
             }while(true);
     }//driver
-    public class genlist<T>{               /* "T" is the type parameter */
-        private T[] data;                   /* we keep items in the array "data" */
-        public int size => data.Length;     /* I think that "size" sounds better than "Length" */
-        public T this[int i] => data[i];     /* we get items from our list using [i] notation */
-        public genlist(){ data = new T[0]; }  /* constructor creates empty list */
-        public void add(T item){              /* add item of the type "T" to the list */
-            T[] newdata = new T[size+1];   /* we need a larger array (inefective but uses minimal memory) */
-            Array.Copy(data,newdata,size); /* here you do O(size) operations */
-            newdata[size]=item;            /* add the item at the end of the list */
-            data=newdata;                  /* old data should be garbage collected, no worry here */
+    public class genlist<T>
+    {
+        private T[] data;
+        public int size => data.Length;
+        public T this[int i] => data[i];
+
+        public genlist()
+        {
+            data = new T[0];
         }
-    }//genlist class
+
+        public void add(T item)
+        {
+            T[] newdata = new T[size + 1];
+            Array.Copy(data, newdata, size);
+            newdata[size] = item;
+            data = newdata;
+        }
+
+        public void Print()
+        {
+            foreach (T item in data)
+            {
+                Console.WriteLine(item);
+            }
+        }
+    }
+
 }
