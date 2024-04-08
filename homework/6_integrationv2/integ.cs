@@ -2,7 +2,7 @@ using System;
 
 public static class integ
 {
-    static double integrate(Func<double, double> f, double a, double b,
+    public static double integrate(Func<double, double> f, double a, double b,
         double δ = 0.001, double ε = 0.001, double f2 = double.NaN, double f3 = double.NaN)
     {
         double h = b - a;
