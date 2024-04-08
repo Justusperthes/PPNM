@@ -1,8 +1,28 @@
-Integral of x^0.5 from 0 to 1: 0.672680881565939
-Difference from 2/3: 0.00601421489927201
-Integral of x^-0.5 from 0 to 1: 1.99996150007805
-Difference from 2: 3.84999219513738E-05
-Integral of 4*(1-x^2)^0.5 from 0 to 1: 3.14183457802727
-Difference from pi: 0.000241924437474506
-Integral of ln(x)/x^0.5 from 0 to 1: -3.99991705899915
-Difference from -4: 8.29410008478249E-05
+Integral of function 1 from 0 to 1: 0.667438079304079
+Expected value: 0.666666666666667
+Absolute Difference from expected value: 0.000771412637412539.
+This is within accuracy threshold of 0.001.
+Relative Difference from expected value: 0.0011571190.
+This is above accuracy threshold of 0.001.
+
+Integral of function 2 from 0 to 1: 1.99443686929983
+Expected value: 2
+Absolute Difference from expected value: 0.00556313070016579.
+This is above accuracy threshold of 0.001.
+Relative Difference from expected value: 0.0027815654.
+This is above accuracy threshold of 0.001.
+
+Integral of function 3 from 0 to 1: 3.14217800147817
+Expected value: 3.14159265358979
+Absolute Difference from expected value: 0.000585347888380383.
+This is within accuracy threshold of 0.001.
+Relative Difference from expected value: 0.0001863220.
+This is within accuracy threshold of 0.001.
+
+Integral of function 4 from 0 to 1: -3.9928400006966
+Expected value: -4
+Absolute Difference from expected value: 0.00715999930339528.
+This is above accuracy threshold of 0.001.
+Relative Difference from expected value: 0.0017899998.
+This is above accuracy threshold of 0.001.
+

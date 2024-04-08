@@ -1,33 +1,40 @@
 using System;
-class main{
+
+class main
+{
     public static void Main()
     {
-        integ my_integrator = new integ();
-        double δtolerable;
-        bool δOK;
-        Func<double, double> f1 = x => Math.Sqrt(x); // Define the function x^0.5
-        Func<double, double> f2 = x => 1/Math.Sqrt(x); 
-        Func<double, double> f3 = x => 4*Math.Sqrt(1-x*x); 
-        Func<double, double> f4 = x => Math.Log(x) / Math.Sqrt(x); 
-        double result1 = my_integrator.integrate(f1, 0, 1, 0.1, 0.1); 
-        double result2 = my_integrator.integrate(f2, 0, 1); 
-        double result3 = my_integrator.integrate(f3, 0, 1); 
-        double result4 = my_integrator.integrate(f4, 0, 1); 
-        Console.WriteLine("Integral of x^0.5 from 0 to 1: " + result1);
-        δtolerable = Math.Abs(result1-2/3.0);
-        Console.WriteLine("Difference from 2/3: " + δtolerable);
+        integ my_integrator = new integ(0.001, 0.001);
         
-        Console.WriteLine("Integral of x^-0.5 from 0 to 1: " + result2);
-        δtolerable = Math.Abs(result2-2.0);
-        Console.WriteLine("Difference from 2: " + δtolerable);
+        // Define functions and expected values
+        Func<double, double>[] functions = {
+            x => Math.Sqrt(x),
+            x => 1 / Math.Sqrt(x),
+            x => 4 * Math.Sqrt(1 - x * x),
+            x => Math.Log(x) / Math.Sqrt(x)
+        };
+        
+        double[] expectedValues = { 2.0 / 3.0, 2.0, Math.PI, -4.0 };
 
-        Console.WriteLine("Integral of 4*(1-x^2)^0.5 from 0 to 1: " + result3);
-        δtolerable = Math.Abs(result3-Math.PI);
-        Console.WriteLine("Difference from pi: " + δtolerable);
+        bool isTolerable = true;
+        double δ = my_integrator.getδ();
+        double ε = my_integrator.getε();
 
-        Console.WriteLine("Integral of ln(x)/x^0.5 from 0 to 1: " + result4);
-        δtolerable = Math.Abs(result4-(-4.0));
-        Console.WriteLine("Difference from -4: " + δtolerable);
+        for (int i = 0; i < functions.Length; i++)
+        {
+            double result = my_integrator.integrate(functions[i], 0, 1);
+            double expectedValue = expectedValues[i];
+            double absoluteDifference = Math.Abs(result - expectedValue);
+            double relativeDifference = absoluteDifference / Math.Abs(expectedValue); 
 
+            Console.WriteLine($"Integral of function {i + 1} from 0 to 1: {result}");
+            Console.WriteLine($"Expected value: {expectedValue}");
+            isTolerable = absoluteDifference <= δ;
+            Console.WriteLine($"Absolute Difference from expected value: {absoluteDifference}."); 
+            Console.WriteLine($"This is {(isTolerable ? "within" : "above")} accuracy threshold of {δ}.");
+            isTolerable = relativeDifference <= ε;
+            Console.WriteLine($"Relative Difference from expected value: {relativeDifference:F10}."); 
+            Console.WriteLine($"This is {(isTolerable ? "within" : "above")} accuracy threshold of {ε}.\n");
+        }
     }
 }
