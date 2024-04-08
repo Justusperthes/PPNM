@@ -1,8 +1,26 @@
 using System;
 
-public static class integ
+public class integ
 {
-    public static double integrate(Func<double, double> f, double a, double b,
+    double δ;
+    double ε;
+    public integ()
+    {
+        this.δ = 0.001;
+        this.ε = 0.001;
+    }
+    public integ(double δ, double ε)
+    {
+        this.δ = δ;
+        this.ε = ε;
+    }
+    public void setδ(double δ){
+        this.δ = δ; 
+    }
+    public void setε(double ε){
+        this.ε  = ε; 
+    }
+    public double integrate(Func<double, double> f, double a, double b,
         double δ = 0.001, double ε = 0.001, double f2 = double.NaN, double f3 = double.NaN)
     {
         double h = b - a;

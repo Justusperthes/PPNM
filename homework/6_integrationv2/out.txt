@@ -1,4 +1,8 @@
-Integral of x^0.5 from 0 to 1: 0.666953909054655
+Integral of x^0.5 from 0 to 1: 0.672680881565939
+Difference from 2/3: 0.00601421489927201
 Integral of x^-0.5 from 0 to 1: 1.99996150007805
-Integral of 4/(1-x^2) from 0 to 1: 3.14183457802727
-Integral of ln|x|/x^0.5 from 0 to 1: -3.99991705899915
+Difference from 2: 3.84999219513738E-05
+Integral of 4*(1-x^2)^0.5 from 0 to 1: 3.14183457802727
+Difference from pi: 0.000241924437474506
+Integral of ln(x)/x^0.5 from 0 to 1: -3.99991705899915
+Difference from -4: 8.29410008478249E-05
