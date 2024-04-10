@@ -2,6 +2,7 @@ using static System.Console;
 using System;
 class main{
 static void Main(){
+	
 	int dim = 5;
 	double range = 100.0;
 	WriteLine($"Here is a random {dim}x{dim} matrix A:");
@@ -9,8 +10,9 @@ static void Main(){
 	A.FillWithRandom(-range,range);
 	A.print();
 	WriteLine("Doing QR-decomposition on A to get:");
-
+	DateTime startTime = DateTime.Now; //start measuring time
 	ValueTuple<matrix, matrix> QR = QRGS.decomp(A);
+	DateTime endTime = DateTime.Now; //end measuring time
 	matrix Q = QR.Item1;
 	matrix R = QR.Item2;
 	WriteLine("Q = ");
@@ -18,6 +20,9 @@ static void Main(){
 	WriteLine("R = ");
 	R.print();
 
+	TimeSpan elapsedTime = endTime - startTime;
+	WriteLine($"This decomposition ran in time: {elapsedTime.TotalMilliseconds} milliseconds.\n");
+	
 	WriteLine($"Here is a random {dim}-vector");
 	vector b = new vector(dim,-range,range); 
 	b.print("b:");
