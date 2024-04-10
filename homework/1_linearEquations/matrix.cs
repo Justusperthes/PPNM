@@ -13,7 +13,41 @@ public matrix(int n, int m){
 	size1=n; size2=m; data = new double[size2][];
 	for(int j=0;j<size2;j++) data[j]=new double[size1];
 	}
-public matrix(int n) : this(n,n) {}
+
+public matrix(int n) : this(n,n) {
+	size1=n; 
+	size2=n; 
+	data = new double[size1][];
+	for(int j=0;j<size1;j++) data[j]=new double[size1];
+}
+public void FillWithRandom(double min, double max) {
+    Random random = new Random();
+    for (int i = 0; i < size1; i++) {
+        for (int j = 0; j < size2; j++) {
+            data[i][j] = random.NextDouble() * (max - min) + min;
+        }
+    }
+}
+public void MakeSymmetric(double min, double max) {
+	Random random = new Random();
+	for (int i = 0; i < size1; i++) {
+		data[i][i] = random.NextDouble() * (max - min) + min;
+		for (int j = i+1; j < size2; j++) {
+				double randomNumber = random.NextDouble() * (max - min) + min;
+				data[i][j] = randomNumber;
+				data[j][i] = randomNumber;
+			}
+        }
+}
+/* public matrix(vector v) {
+	n = v.Length();
+	size1=n; 
+	size2=n; 
+	data = new double[size1][];
+	for (int i = 0; i < size; i++) {
+		data[i][i] = v[i];
+	}
+} */
 
 public double this[int r,int c]{
 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -116,6 +150,19 @@ public static vector operator% (matrix a, vector v){
 		u[i]+=a[k,i]*v[k];
 	return u;
 	}
+
+// public static matrix randomMatrix(int n, double min, double max) : this(n, n) {
+//     size1 = n;
+//     size2 = n;
+//     data = new double[size1][];
+//     Random random = new Random();
+//     for (int i = 0; i < size1; i++) {
+//         data[i] = new double[size2];
+//         for (int j = 0; j < size2; j++) {
+//             data[i][j] = random.NextDouble() * (max - min) + min;
+//         }
+//     }
+// }
 
 public matrix(vector e) : this(e.size,e.size) { for(int i=0;i<e.size;i++)this[i,i]=e[i]; }
 

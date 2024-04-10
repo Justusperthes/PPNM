@@ -9,17 +9,32 @@ RUN = mono
 # the bash, I think
 all: out.txt; cat $<
 
+erf.gnuplot.png : out.txt erf.data.txt Makefile
+	echo '\
+		set terminal pngcairo enhanced font "arial,10" size 800,600 ;\
+		set output "$@" ;\
+		set xlabel "x" ;\
+		set ylabel "erf(x)" ;\
+		set title "Error function" ;\
+		plot \
+			"erf.data.txt" with lines title "Error function" \
+			,"out.txt" using 1:2 with points pointtype 7 pointsize 0.5 title "Output"\
+	' | tee log.gpi | gnuplot
+
 # out.txt should be created from the output of running main.exe,
 # the command specifies: run mono on the first dependency (main.exe)
 out.txt: main.exe
 	$(RUN) $< > $@
+
+erf.data.txt: main.exe
+	$(RUN) $<
 
 out2: test.exe
 	$(RUN) $< > $@
 
 # main.cs is compiled into main.exe while matrix.dll is 
 # referenced (the second dependency in the list: $(word 2,$^))
-main.exe: main.cs integ.dll
+main.exe: main.cs integ.dll erf.data.txt
 	$(CSC) -reference:integ.dll $<
 
 # matrix.dll is build from vector.cs and matrix.cs,

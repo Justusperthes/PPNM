@@ -36,5 +36,13 @@ class main
             Console.WriteLine($"Relative Difference from expected value: {relativeDifference:F10}."); 
             Console.WriteLine($"This is {(isTolerable ? "within" : "above")} accuracy threshold of {ε}.\n");
         }
+        //Error function
+        errorFct myErrorFct = new errorFct();
+        double z = 2.0;
+        double errFctVal = myErrorFct.erf(z);
+        Console.WriteLine($"This is the error functon with z = {z}: \nerf({z}) = {errFctVal}");
+        errorFct errorFunction = new errorFct();
+        errorFunction.GenerateDataFile("erf.data.txt", -3, 3, 100);
+
     }
 }

@@ -4,6 +4,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using static System.Math;
 using static System.Console;
+using System.Collections.Generic;
 public partial class vector{
 
 private double[] data;
@@ -29,7 +30,13 @@ public vector(string s){
                         this[i]=double.Parse(words[i]);
                         }
 	}
-
+public vector(int length, double min, double max){
+	data=new double[length];
+	Random random = new Random();
+	for(int i = 0; i < length; i++){
+		data[i] = random.NextDouble() * (max - min) + min;
+	}
+}
 public static vector UnitVector(int n, int index)
 {
     vector v = new vector(n);
