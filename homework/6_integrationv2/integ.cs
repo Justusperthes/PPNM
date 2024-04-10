@@ -1,4 +1,5 @@
 using System;
+using static System.Math;
 
 public class integ
 {
@@ -43,5 +44,21 @@ public class integ
         if (err <= δ + ε * Math.Abs(Q)) return Q;
         else return integrate(f, a, (a + b) / 2, f1, f2) +
                     integrate(f, (a + b) / 2, b, f3, f4);
+    }
+}
+public class errorFct{
+    integ errorIntegrator = new integ();
+    public double erf(double z){
+        if(z<0){
+            return -erf(-z);
+        }
+        else if(z>=0 && z<=1){
+            Func<double,double> f = x => Exp(-Pow(x, 2));
+            return 2/Sqrt(PI)*errorIntegrator.integrate(f,0,z);
+        }
+        else{
+            Func<double,double> g = t => Exp(-(Pow(z+(1-t)/t, 2)))/t/t;
+            return 1-2/Sqrt(PI)*errorIntegrator.integrate(g,0,1);
+        }
     }
 }
