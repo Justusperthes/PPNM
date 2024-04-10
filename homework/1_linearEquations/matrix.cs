@@ -319,7 +319,9 @@ public void print(string s="",string format="{0,10:g3} "){
 		System.Console.Write(format,this[ir,ic]);
 		System.Console.WriteLine();
 		}
+	System.Console.WriteLine();
 	}
+	
 
 public static bool approx(double a, double b, double acc=1e-6, double eps=1e-6){
 	if(Abs(a-b)<acc)return true;

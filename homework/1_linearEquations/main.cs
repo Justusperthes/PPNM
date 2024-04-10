@@ -2,53 +2,44 @@ using static System.Console;
 using System;
 class main{
 static void Main(){
-	WriteLine("Here is a random 10x10 matrix A:\n");
-	var K = new matrix(10);
-	K.FillWithRandom(-10,10);
-	K.print();
-	
-	WriteLine("Doing QR-decomposition on A to get:\n");
+	int dim = 5;
+	double range = 100.0;
+	WriteLine($"Here is a random {dim}x{dim} matrix A:");
+	var A = new matrix(dim);
+	A.FillWithRandom(-range,range);
+	A.print();
+	WriteLine("Doing QR-decomposition on A to get:");
 
-	/* var A=new matrix("1 2 ; 3 4");
-	var ma2=new matrix("11 21 31 ; 15 16 7 ; 18 2 15");
-	var ma4=new matrix("11 21 31 ; 15 16 7 ; 18 2 15 ; 1 2 3");
-	ma4.print();
-	WriteLine("A");
-	A.print(); */
-
-	ValueTuple<matrix, matrix> QR = QRGS.decomp(K);
+	ValueTuple<matrix, matrix> QR = QRGS.decomp(A);
 	matrix Q = QR.Item1;
 	matrix R = QR.Item2;
-	WriteLine("Q");
+	WriteLine("Q = ");
 	Q.print();
-	WriteLine("R");
+	WriteLine("R = ");
 	R.print();
 
-	WriteLine("Here is a random 10-vector b:\n");
-	vector b = new vector(10,-10.0,10.0); 
+	WriteLine($"Here is a random {dim}-vector");
+	vector b = new vector(dim,-range,range); 
 	b.print("b:");
 	
-	
-	WriteLine("Solving the system Kx=b");
+	WriteLine("\nSolving the system Ax=b");
 
-	vector resultVector = QRGS.solve(K,b);
-	ValueTuple<matrix, matrix> QR2 = QRGS.decomp(K);
-	matrix Q2 = QR2.Item1;
-	matrix R2 = QR2.Item2;
-	WriteLine("Q2");
-	Q2.print();
-	WriteLine("R2");
-	R2.print(); 
-	System.Console.WriteLine("resultVector of A and ve system");
-	resultVector.print();
+	vector resultVector = QRGS.solve(A,b);
+	resultVector.print();  
+
+	WriteLine("\nProduct of Q and R (should equal A):");
 	var QRprod =  Q*R;
 	QRprod.print();
+
+	WriteLine("\nThe determinant of A:");
 	var det = QRGS.det(R);
 	WriteLine(det);
-	// vector unitvector = vector.UnitVector(5,1);
-	// unitvector.print();
+	
+	WriteLine("\nInverse of R by Gram-Schmidt QR-decomp:");
 	matrix inverse = QRGS.inverse(R);
 	inverse.print();
+
+	WriteLine("\nProduct of R and R^-1 should equal identity:");
 	var RRinverse = R*inverse;
 	RRinverse.print();
 }
