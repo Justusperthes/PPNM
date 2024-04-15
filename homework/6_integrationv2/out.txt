@@ -1,30 +1,30 @@
-Integral of function 1 from 0 to 1: 0.667438079304079
+Integral of function 1 from 0 to 1: 0.666953909054655
 Expected value: 0.666666666666667
-Absolute Difference from expected value: 0.000771412637412539.
+Absolute Difference from expected value: 0.000287242387988385.
 This is within accuracy threshold of 0.001.
-Relative Difference from expected value: 0.0011571190.
-This is above accuracy threshold of 0.001.
+Relative Difference from expected value: 0.0004308636.
+This is within accuracy threshold of 0.001.
 
-Integral of function 2 from 0 to 1: 1.99443686929983
+Integral of function 2 from 0 to 1: 1.99996150007805
 Expected value: 2
-Absolute Difference from expected value: 0.00556313070016579.
-This is above accuracy threshold of 0.001.
-Relative Difference from expected value: 0.0027815654.
-This is above accuracy threshold of 0.001.
+Absolute Difference from expected value: 3.84999219513738E-05.
+This is within accuracy threshold of 0.001.
+Relative Difference from expected value: 0.0000192500.
+This is within accuracy threshold of 0.001.
 
-Integral of function 3 from 0 to 1: 3.14217800147817
+Integral of function 3 from 0 to 1: 3.14183457802727
 Expected value: 3.14159265358979
-Absolute Difference from expected value: 0.000585347888380383.
+Absolute Difference from expected value: 0.000241924437474506.
 This is within accuracy threshold of 0.001.
-Relative Difference from expected value: 0.0001863220.
+Relative Difference from expected value: 0.0000770069.
 This is within accuracy threshold of 0.001.
 
-Integral of function 4 from 0 to 1: -3.9928400006966
+Integral of function 4 from 0 to 1: -3.99991705899915
 Expected value: -4
-Absolute Difference from expected value: 0.00715999930339528.
-This is above accuracy threshold of 0.001.
-Relative Difference from expected value: 0.0017899998.
-This is above accuracy threshold of 0.001.
+Absolute Difference from expected value: 8.29410008478249E-05.
+This is within accuracy threshold of 0.001.
+Relative Difference from expected value: 0.0000207353.
+This is within accuracy threshold of 0.001.
 
 This is the error functon with z = 2: 
 erf(2) = 0.994900318508938

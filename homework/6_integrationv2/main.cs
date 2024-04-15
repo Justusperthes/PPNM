@@ -3,9 +3,7 @@ using System;
 class main
 {
     public static void Main()
-    {
-        integ my_integrator = new integ(0.001, 0.001);
-        
+    {        
         // Define functions and expected values
         Func<double, double>[] functions = {
             x => Math.Sqrt(x),
@@ -17,12 +15,12 @@ class main
         double[] expectedValues = { 2.0 / 3.0, 2.0, Math.PI, -4.0 };
 
         bool isTolerable = true;
-        double δ = my_integrator.getδ();
-        double ε = my_integrator.getε();
+        double δ = 0.001;
+        double ε = 0.001;
 
         for (int i = 0; i < functions.Length; i++)
         {
-            double result = my_integrator.integrate(functions[i], 0, 1);
+            double result = integ.integrate(functions[i], 0, 1, δ, ε);
             double expectedValue = expectedValues[i];
             double absoluteDifference = Math.Abs(result - expectedValue);
             double relativeDifference = absoluteDifference / Math.Abs(expectedValue); 
@@ -37,12 +35,10 @@ class main
             Console.WriteLine($"This is {(isTolerable ? "within" : "above")} accuracy threshold of {ε}.\n");
         }
         //Error function
-        errorFct myErrorFct = new errorFct();
         double z = 2.0;
-        double errFctVal = myErrorFct.erf(z);
+        double errFctVal = errorFct.erf(z);
         Console.WriteLine($"This is the error functon with z = {z}: \nerf({z}) = {errFctVal}");
-        errorFct errorFunction = new errorFct();
-        errorFunction.GenerateDataFile("erf.data.txt", -3, 3, 100);
+        errorFct.GenerateDataFile("erf.data.txt", -3, 3, 100);
 
     }
 }

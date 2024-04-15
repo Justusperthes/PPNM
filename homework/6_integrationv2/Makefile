@@ -33,7 +33,7 @@ out2: test.exe
 
 # main.cs is compiled into main.exe while matrix.dll is 
 # referenced (the second dependency in the list: $(word 2,$^))
-main.exe: main.cs integ.dll erf.data.txt
+main.exe: main.cs integ.dll 
 	$(CSC) -reference:integ.dll $<
 
 # matrix.dll is build from vector.cs and matrix.cs,
