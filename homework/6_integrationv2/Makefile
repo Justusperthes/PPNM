@@ -11,14 +11,13 @@ all: out.txt; cat $<
 
 erf.gnuplot.png : out.txt erf.data.txt Makefile
 	echo '\
-		set terminal pngcairo enhanced font "arial,10" size 800,600 ;\
-		set output "$@" ;\
-		set xlabel "x" ;\
-		set ylabel "erf(x)" ;\
-		set title "Error function" ;\
-		plot \
-			"erf.data.txt" with lines title "Error function" \
-			,"out.txt" using 1:2 with points pointtype 7 pointsize 0.5 title "Output"\
+	set terminal pngcairo enhanced font "arial,10" size 800,600 ;\
+	set output "$@" ;\
+	set xlabel "x" ;\
+	set ylabel "erf(x)" ;\
+	set title "Error function" ;\
+	plot \
+	"erf.data.txt" with lines title "Error function" \
 	' | tee log.gpi | gnuplot
 
 # out.txt should be created from the output of running main.exe,

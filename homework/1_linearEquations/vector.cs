@@ -31,6 +31,7 @@ public vector(string s){
                         }
 	}
 public vector(int length, double min, double max){
+	//constructor for random vector of length length
 	data=new double[length];
 	Random random = new Random();
 	for(int i = 0; i < length; i++){
