@@ -1,0 +1,2 @@
+Estimated integral: 1.33442553336961
+Error estimate: NaN
