@@ -1,26 +1,22 @@
 using System;
 
 public static class main{
-    public static void Main(){
-        Func<vector, double> f = (vector point) =>
-        {
-            double x = point[0]; // x-coordinate
-            double y = point[1]; // y-coordinate
-            return x * x + y * y; // Function value at (x, y)
+    public static void Main(string[] args) {
+        Func<vector, double> f = (vector point) => {
+            double x = point[0];
+            double y = point[1];
+            double distance = Math.Sqrt(x * x + y * y);
+            return distance <= 1 ? 1 : 0;
         };
-        vector a = new vector(0, 0);
-        vector b = new vector(1, 1);
-        //number of random samples used in integration
-        int N = 10000; 
-        // Call the plainmc method to estimate the integral
+
+        vector a = new vector(-1, -1); // Lower bounds
+        vector b = new vector(1, 1);   // Upper bounds
+        int N = 10000000; // Number of samples
+
         var result = mc.plainmc(f, a, b, N);
 
-        // Retrieve the integral and error from the result tuple
-        double integral = result.Item1;
-        double error = result.Item2;
-
-        Console.WriteLine($"Estimated integral: {integral}");
-        Console.WriteLine($"Error estimate: {error}");
+        Console.WriteLine($"Estimated integral value: {result.Item1}");
+        Console.WriteLine($"Estimated error: {result.Item2}");
+    }
     }
 
-}
