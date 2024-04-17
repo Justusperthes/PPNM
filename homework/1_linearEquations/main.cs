@@ -3,10 +3,11 @@ using System;
 class main{
 static void Main(){
 	
-	int dim = 5;
+	int n = 7;
+	int m = 5;
 	double range = 100.0;
-	WriteLine($"Here is a random {dim}x{dim} matrix A:");
-	var A = new matrix(dim);
+	WriteLine($"Here is a random {n}x{m} matrix A:");
+	var A = new matrix(n,m);
 	A.FillWithRandom(-range,range);
 	A.print();
 	WriteLine("Doing QR-decomposition on A to get:");
@@ -24,8 +25,8 @@ static void Main(){
 	TimeSpan elapsedTime = endTime - startTime;
 	WriteLine($"This decomposition ran in time: {elapsedTime.TotalMilliseconds} milliseconds.\n");
 	
-	WriteLine($"Here is a random {dim}-vector");
-	vector b = new vector(dim,-range,range); 
+	WriteLine($"Here is a random {n}-vector");
+	vector b = new vector(n,-range,range); 
 	b.print("b:");
 	
 	WriteLine("\nSolving the system Ax=b");

@@ -22,8 +22,8 @@ public matrix(int n) : this(n,n) {
 }
 public void FillWithRandom(double min, double max) {
     Random random = new Random();
-    for (int i = 0; i < size1; i++) {
-        for (int j = 0; j < size2; j++) {
+    for (int i = 0; i < size2; i++) {
+        for (int j = 0; j < size1; j++) {
             data[i][j] = random.NextDouble() * (max - min) + min;
         }
     }

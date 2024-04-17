@@ -35,7 +35,7 @@ public static class QRGS{
         //decomp() should perform stabilized Gram-Schmidt 
         //orthogonalization of an n×m (where n≥m) 
         //matrix A and calculate R.
-        int m = A.size1; 
+        int m = A.size2; 
         matrix Q=A.copy(), R=new matrix(m,m);
         for(int i =0; i<m; i++){
             R[i,i]=Q[i].norm(); /* Q[i] point s to the i−th columb */
