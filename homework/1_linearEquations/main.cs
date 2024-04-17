@@ -19,6 +19,7 @@ static void Main(){
 	Q.print();
 	WriteLine("R = ");
 	R.print();
+	WriteLine("R should be uppper triangular.");
 
 	TimeSpan elapsedTime = endTime - startTime;
 	WriteLine($"This decomposition ran in time: {elapsedTime.TotalMilliseconds} milliseconds.\n");
@@ -36,9 +37,8 @@ static void Main(){
 	var QRprod =  Q*R;
 	QRprod.print();
 
-	WriteLine("\nThe determinant of A:");
 	var det = QRGS.det(R);
-	WriteLine(det);
+	WriteLine($"The determinant of A: det(A) = {det}");
 	
 	WriteLine("\nInverse of R by Gram-Schmidt QR-decomp:");
 	matrix inverse = QRGS.inverse(R);
@@ -47,5 +47,5 @@ static void Main(){
 	WriteLine("\nProduct of R and R^-1 should equal identity:");
 	var RRinverse = R*inverse;
 	RRinverse.print();
-}
+	}
 }

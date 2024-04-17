@@ -18,5 +18,5 @@ public static class main{
         Console.WriteLine($"Estimated integral value: {result.Item1}");
         Console.WriteLine($"Estimated error: {result.Item2}");
     }
-    }
+}
 
