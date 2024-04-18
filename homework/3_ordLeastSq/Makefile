@@ -9,6 +9,20 @@ RUN = mono
 # the bash, I think
 all: out.txt; cat $<
 
+decay.gnuplot.png : out.txt decay.data.txt Makefile
+	echo '\
+	set terminal pngcairo enhanced font "arial,10" size 800,600 ;\
+	set output "$@" ;\
+	set xlabel "x" ;\
+	set ylabel "decay(x)" ;\
+	set title "Error function" ;\
+	plot \
+	"decay.data.txt" with lines title "Decay" \
+	' | tee log.gpi | gnuplot
+
+decay.data.txt: main.exe
+	$(RUN) $<
+
 # out.txt should be created from the output of running main.exe,
 # the command specifies: run mono on the first dependency (main.exe)
 out.txt: main.exe

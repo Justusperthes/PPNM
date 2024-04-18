@@ -8,8 +8,14 @@ class main{
         Func<double, double>[] fs = new Func<double, double>[]{
             x => 1,
             x => x,
-            x => x*x
+            x => x*x/* ,
+            x => Pow(x, 3),
+            x => Pow(x,4),
+            x => Pow(x,5) */
         };
-        ordLeastSq.lsfit(fs, X, Y, DY);
+        var c_Sigma = ordLeastSq.lsfit(fs, X, Y, DY);
+        vector c = c_Sigma.Item1;
+        c.print();
+        
     }
 }
