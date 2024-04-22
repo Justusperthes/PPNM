@@ -15,7 +15,7 @@ class main
         for (int i = 0; i < Y.size; i++)
         {
             lnY[i] = Log(Y[i]);
-        } 
+        }   
 
         Func<double, double>[] fs = new Func<double, double>[]
         {
@@ -57,6 +57,11 @@ class main
         plotScript += "e";
 
         ExecuteGnuplotScript(plotScript);
+
+        //Half-life
+        double T_half = Log(2)/lambda;
+        Console.WriteLine($"The half-life is T_1/2 = {T_half.ToString("F" + 2)} d, compared with " +
+        "the modern value of 3.6319 d.");
     }
 
     static void ExecuteGnuplotScript(string script)
