@@ -15,7 +15,7 @@ class main
         for (int i = 0; i < Y.size; i++)
         {
             lnY[i] = Log(Y[i]);
-        }
+        } 
 
         Func<double, double>[] fs = new Func<double, double>[]
         {
@@ -24,11 +24,10 @@ class main
         };
 
         var c_Sigma = ordLeastSq.lsfit(fs, X, lnY, DY);
-        vector c = c_Sigma.Item1;
-
+ 
         double a = Exp(c_Sigma.Item1[0]); // Extracting 'a' from the intercept
         double lambda = -c_Sigma.Item1[1]; // Extracting 'lambda' from the slope
-
+  　
         // Writing data to a file
         using (System.IO.StreamWriter file = new System.IO.StreamWriter("data.txt"))
         {
@@ -38,7 +37,7 @@ class main
                 file.WriteLine($"{x} {y}");
             }
         }
-
+ 
         // Create a Gnuplot script for both fit and data points with error bars
         string plotScript = @"
             set terminal pngcairo enhanced font 'arial,10' size 800,600

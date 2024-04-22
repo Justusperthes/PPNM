@@ -7,24 +7,21 @@ RUN = mono
 
 all: out.txt; cat $<
 
-decay.gnuplot.png : out.txt decay.data.txt Makefile
+decay.gnuplot.png : data.txt Makefile
 	echo '\
 	set terminal pngcairo enhanced font "arial,10" size 800,600 ;\
 	set output "$@" ;\
-	set xlabel "x" ;\
-	set ylabel "decay(x)" ;\
-	set title "Error function" ;\
+	set xlabel "t (days)" ;\
+	set ylabel "activity" ;\
+	set title "Decay" ;\
 	plot \
-	"decay.data.txt" with lines title "Decay" \
+	"data.txt" with lines title "Exponential fit", \
 	' | tee log.gpi | gnuplot
 
-decay.data.txt: main.exe
-	$(RUN) $<
+#decay.data.txt: main.exe
+#	$(RUN) $<
 
 out.txt: main.exe
-	$(RUN) $< > $@
-
-out2: test.exe
 	$(RUN) $< > $@
 
 main.exe: main.cs matrix.dll ordLeastSq.dll QRGS.dll
@@ -38,9 +35,6 @@ QRGS.dll : QRGS.cs matrix.dll #; $(MKLIB)
 
 ordLeastSq.dll : ordLeastSq.cs matrix.dll QRGS.dll #; $(MKLIB)
 	$(CSC) -reference:matrix.dll -reference:QRGS.dll -target:library -out:$@ ordLeastSq.cs
-
-test.exe : test.cs
-	$(CSC) $<
 
 clean:
 	$(RM) *.dll *.exe [Oo]ut*
