@@ -5,13 +5,25 @@ MKLIB = mcs -target:library -out:$@ $(LIBS) $(CODE)
 CSC = mcs
 RUN = mono
 
-all: out.txt; cat $<
+all: error.gnuplot.png out.txt
+	cat out.txt
+
+error.gnuplot.png : out.txt error.data.txt Makefile
+	@echo '\
+	set terminal pngcairo enhanced font "arial,10" size 800,600 ;\
+	set output "$@" ;\
+	set xlabel "samples N" ;\
+	set ylabel "error" ;\
+	set title "Error as function of samples" ;\
+	plot \
+	"error.data.txt" with lines title "Error" \
+	' | tee log.gpi | gnuplot
 
 out.txt: main.exe
 	$(RUN) $< > $@
 
-out2: test.exe
-	$(RUN) $< > $@
+error.data.txt: main.exe
+	$(RUN) $<
 
 main.exe: main.cs vector.dll mc.dll
 	$(CSC) -reference:vector.dll -reference:mc.dll $<

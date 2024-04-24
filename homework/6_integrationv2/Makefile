@@ -5,10 +5,10 @@ MKLIB = mcs -target:library -out:$@ $(LIBS) $(CODE)
 CSC = mcs
 RUN = mono
 
-all: out.txt; cat $<
+all: erf.gnuplot.png $<
 
 erf.gnuplot.png : out.txt erf.data.txt Makefile
-	echo '\
+	@echo '\
 	set terminal pngcairo enhanced font "arial,10" size 800,600 ;\
 	set output "$@" ;\
 	set xlabel "x" ;\

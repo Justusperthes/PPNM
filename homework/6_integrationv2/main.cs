@@ -3,7 +3,7 @@ using System;
 class main
 {
     public static void Main()
-    {        
+    {          
         // Define functions and expected values
         Func<double, double>[] functions = {
             x => Math.Sqrt(x),
