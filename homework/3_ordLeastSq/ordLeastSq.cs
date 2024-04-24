@@ -20,7 +20,7 @@ public static class ordLeastSq{
         vector delta_c = new vector(m);
         for (int k=0; k<m; k++){
             delta_c[k] = Sqrt(Sigma[k,k]); // Standard deviation of coefficients
-        }
+        } 
         return (c,Sigma,delta_c);
     }
 }

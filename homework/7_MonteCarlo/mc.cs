@@ -23,7 +23,7 @@ public static class mc{
     } 
     public static void GenerateDataFile(string filename, Func<vector,double> f, vector a, vector b, int N) {
         using (StreamWriter writer = new StreamWriter(filename)) {
-            for (int n = 100; n <= N; n += 10000) { 
+            for (int n = 100; n <= N; n += 1000) { 
                 var y = plainmc(f,a,b,n);
                 double error = y.Item2;
                 writer.WriteLine($"{n} {error}");

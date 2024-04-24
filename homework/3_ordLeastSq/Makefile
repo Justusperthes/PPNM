@@ -18,14 +18,14 @@ decay.gnuplot.png : data.txt Makefile
 	"data.txt" with lines title "Exponential fit", \
 	' | tee log.gpi | gnuplot
 
-#decay.data.txt: main.exe
-#	$(RUN) $<
+plotter.dll : plotter.cs
+	$(CSC) -target:library -out:$@ $^
 
 out.txt: main.exe
 	$(RUN) $< > $@
 
-main.exe: main.cs matrix.dll ordLeastSq.dll QRGS.dll
-	$(CSC) -reference:matrix.dll -reference:ordLeastSq.dll -reference:QRGS.dll $<
+main.exe: main.cs matrix.dll ordLeastSq.dll QRGS.dll plotter.dll
+	$(CSC) -reference:matrix.dll -reference:ordLeastSq.dll -reference:QRGS.dll -reference:plotter.dll $<
 
 matrix.dll : vector.cs matrix.cs
 	$(CSC) -target:library -out:$@ $^

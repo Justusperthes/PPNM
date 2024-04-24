@@ -19,7 +19,7 @@ public static class main{
         Console.WriteLine($"Estimated error: {result.Item2}");
 
         //Making a plot of error as a function of number of samples
-        mc.GenerateDataFile("error.data.txt", f, a, b, 1000000);
+        mc.GenerateDataFile("error.data.txt", f, a, b, 100000);
 
     }
 }
