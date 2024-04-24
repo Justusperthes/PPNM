@@ -24,7 +24,8 @@ class main
         };
 
         var c_Sigma = ordLeastSq.lsfit(fs, X, lnY, DY);
- 
+        var Sigma = c_Sigma.Item2;
+        Sigma.print();
         double a = Exp(c_Sigma.Item1[0]); // Extracting 'a' from the intercept
         double lambda = -c_Sigma.Item1[1]; // Extracting 'lambda' from the slope
   　

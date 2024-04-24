@@ -1,2 +1,2 @@
-Estimated integral value: 6.2826176
-Estimated error: NaN
+Estimated integral value: 3.14118
+Estimated error: 0.00164247015424939

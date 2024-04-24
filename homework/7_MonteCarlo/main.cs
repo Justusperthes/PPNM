@@ -11,7 +11,7 @@ public static class main{
 
         vector a = new vector(-1, -1); // Lower bounds
         vector b = new vector(1, 1);   // Upper bounds
-        int N = 10000000; // Number of samples
+        int N = 1000000; // Number of samples
 
         var result = mc.plainmc(f, a, b, N);
 

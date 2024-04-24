@@ -31,11 +31,11 @@ public static class QRGS{
                 }
         return true;
     }
-    public static ValueTuple<matrix, matrix> decomp2(matrix A){
+    public static ValueTuple<matrix, matrix> decomp(matrix A){
         //decomp() should perform stabilized Gram-Schmidt 
         //orthogonalization of an n×m (where n≥m) 
         //matrix A and calculate R.
-        int m = A.size1; 
+        int m = A.size2; 
         matrix Q=A.copy(), R=new matrix(m,m);
         for(int i =0; i<m; i++){
             R[i,i]=Q[i].norm(); /* Q[i] point s to the i−th columb */
@@ -55,60 +55,6 @@ public static class QRGS{
         (matrix Q,matrix R) QR = (Q,R);
         return QR;
     }
-    public static ValueTuple<matrix, matrix> decomp(matrix A) {
-        int n = A.size1;
-        int m = A.size2;
-        matrix Q = new matrix(n, m);
-        matrix R = new matrix(m, m);
-
-        for (int j = 0; j < m; j++)
-        {
-            for (int i = 0; i < n; i++)
-            {
-                Q[i, j] = A[i, j];
-            }
-
-            for (int k = 0; k < j; k++)
-            {
-                double dotProduct = 0;
-                for (int i = 0; i < n; i++)
-                {
-                    dotProduct += Q[i, k] * A[i, j];
-                }
-                R[k, j] = dotProduct;
-                for (int i = 0; i < n; i++)
-                {
-                    Q[i, j] -= R[k, j] * Q[i, k];
-                }
-            }
-
-            double norm = 0;
-            for (int i = 0; i < n; i++)
-            {
-                norm += Q[i, j] * Q[i, j];
-            }
-            norm = Math.Sqrt(norm);
-
-            if (norm == 0)
-            {
-                // Handle division by zero error
-                // For example, set Q[:, j] to a default value or throw an exception
-                // throw new DivideByZeroException("Division by zero encountered.");
-            }
-            else
-            {
-                for (int i = 0; i < n; i++)
-                {
-                    Q[i, j] /= norm;
-                }
-                R[j, j] = norm;
-            }
-        }
-
-        return (Q, R);
-    }
-
-
     public static vector solve(matrix A, vector b){
         //should use the matrices Q and R from "decomp" 
         //and solve the equation QRx=b for the given 
