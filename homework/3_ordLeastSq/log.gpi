@@ -1,0 +1,9 @@
+\
+set terminal pngcairo enhanced font "arial,10" size 800,600 ;\
+set output "decay.gnuplot.png" ;\
+set xlabel "t (days)" ;\
+set ylabel "activity" ;\
+set title "Decay" ;\
+plot \
+"data.txt" with lines title "Exponential fit", \
+
