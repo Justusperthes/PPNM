@@ -26,10 +26,10 @@ public static class main{
             //square each point and take inverse
             //plot and see if linear
 
-        // Read the file and extract the second column
-         string[] lines = File.ReadAllLines("error.data.txt");
+        // Define variables for writing data
+        string[] lines = File.ReadAllLines("error.data.txt");
         double[][] data = lines.Select(line => line.Split().Select(double.Parse).ToArray()).ToArray();
-
+ 
         // Square each value and take the inverse
         for (int i = 0; i < data.Length; i++)
         {
@@ -37,23 +37,12 @@ public static class main{
         }
 
         // Write the modified data to a new file
-        using (StreamWriter writer = new StreamWriter("modified_data.txt"))
+        using (StreamWriter writer = new StreamWriter("linerror.data.txt"))
         {
             foreach (var row in data)
             {
                 writer.WriteLine(string.Join(" ", row));
             }
         }
-
-        string gnuplotScript = @"
-            set terminal png
-            set output 'plot.png'
-            plot 'modified_data.txt' using 1:2 with lines
-        ";
-
-        File.WriteAllText("plot.gp", gnuplotScript);
-
-        // Execute Gnuplot
-        System.Diagnostics.Process.Start("gnuplot", "plot.gp");
     }
 }

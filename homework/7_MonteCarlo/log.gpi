@@ -1,9 +1,9 @@
 \
 set terminal pngcairo enhanced font "arial,10" size 800,600 ;\
-set output "error.gnuplot.png" ;\
-set xlabel "samples N" ;\
-set ylabel "error" ;\
-set title "Error as function of samples" ;\
+set output "linerror.gnuplot.png" ;\
+set xlabel "N" ;\
+set ylabel "1/error^2" ;\
+set title "1/error^2 = k*N" ;\
 plot \
-"error.data.txt" with lines title "Error" \
+"linerror.data.txt" with lines title "Modified error" \
 
