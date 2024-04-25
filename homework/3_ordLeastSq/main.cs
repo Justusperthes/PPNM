@@ -25,7 +25,7 @@ class main
         string plotScript = PlotData.CreateGnuplotScript();
         PlotData.RunPlotScript(X,Y,DY,plotScript);
 
-        //Half-life 
+        // Half-life 
         double T_half = Log(2)/lambda;
         Console.WriteLine($"The half-life is T_1/2 = {T_half.ToString("F" + 2)} d, compared with " +
         "the modern value of 3.6319 d.");
