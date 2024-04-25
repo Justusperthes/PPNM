@@ -3,7 +3,7 @@ LIBS = $(addprefix -reference:,$(filter %.dll,$^))
 MKEXE = mcs -target:exe -out:$@ $(LIBS) $(CODE)
 MKLIB = mcs -target:library -out:$@ $(LIBS) $(CODE)
 CSC = mcs
-RUN = mono
+RUN = mono --debug
 
 all: error.gnuplot.png linerror.gnuplot.png out.txt
 	cat out.txt
