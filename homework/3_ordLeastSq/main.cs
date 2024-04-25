@@ -12,20 +12,20 @@ class main
         vector DY = new vector(6, 5, 4, 4, 4, 3, 3, 2, 2);
 
         // Calculate the natural logarithm of Y
-        vector lnY = CalculateNaturalLog(Y);   
+        vector lnY = PlotData.CalculateNaturalLog(Y);   
 
         // Linear least squares fit and define useful variables
-        var fittingResult = PerformLinearLeastSquaresFit(X, lnY, DY);
-        var Sigma = fittingResult.Item2;
+        var fittingResult = PlotData.PerformLinearLeastSquaresFit(X, lnY, DY);
+        var sigma = fittingResult.Item2;
         double a = Exp(fittingResult.Item1[0]); // Extracting 'a' from the intercept
         double lambda = -fittingResult.Item1[1]; // Extracting 'lambda' from the slope
     
         // Write data to a file and run Gnuplot script
-        plotter.writeDataToFile(lambda,a);
-        string plotScript = plotter.createGnuplotScript();
-        plotter.runPlotScript(X,Y,DY,plotScript);
+        PlotData.WriteDataToFile(lambda,a);
+        string plotScript = PlotData.CreateGnuplotScript();
+        PlotData.RunPlotScript(X,Y,DY,plotScript);
 
-        //Half-life
+        //Half-life 
         double T_half = Log(2)/lambda;
         Console.WriteLine($"The half-life is T_1/2 = {T_half.ToString("F" + 2)} d, compared with " +
         "the modern value of 3.6319 d.");

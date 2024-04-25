@@ -19,7 +19,7 @@ decay.gnuplot.png : data.txt Makefile
 	' | tee log.gpi | gnuplot
 
 plotter.dll : plotter.cs
-	$(CSC) -target:library -out:$@ $^
+	$(CSC) -target:library -reference:matrix.dll -reference:ordLeastSq.dll -out:$@ $^
 
 out.txt: main.exe
 	$(RUN) $< > $@

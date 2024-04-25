@@ -1,8 +1,10 @@
+/* This is an auxiliary class for doing plotting and writing to data files. */
+
 using System;
 using static System.Math;
 using System.Diagnostics;
 
-public static class plotter{
+public static class PlotData{
     public static void ExecuteGnuplotScript(string script)
         {
             using (Process process = new Process())
@@ -21,7 +23,7 @@ public static class plotter{
                 process.WaitForExit();
             }
         }
-    public static void writeDataToFile(double lambda, double a){
+    public static void WriteDataToFile(double lambda, double a){
         using (System.IO.StreamWriter file = new System.IO.StreamWriter("data.txt"))
         {
             for (double x = 0; x <= 15; x += 0.1)
@@ -31,7 +33,7 @@ public static class plotter{
             }
         }
     }
-    public static string createGnuplotScript(){
+    public static string CreateGnuplotScript(){
         string plotScript = @"
             set terminal pngcairo enhanced font 'arial,10' size 800,600
             set output 'plot.png'
@@ -41,7 +43,7 @@ public static class plotter{
         ";
         return plotScript;
     }
-    public static void runPlotScript(vector X, vector Y, vector DY, string plotScript){
+    public static void RunPlotScript(vector X, vector Y, vector DY, string plotScript){
         // Append data and errors to the script
         for (int i = 0; i < X.size; i++) 
         {
@@ -71,7 +73,7 @@ public static class plotter{
             x => x
         };
 
-        return ordLeastSq.lsfit(fs, X, Y, DY);
+        return ordLeastSq.LSfit(fs, X, Y, DY);
     }
     public static (vector, matrix, vector) PerformRootFit(vector X, vector Y, vector DY)
     {

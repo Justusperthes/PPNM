@@ -2,7 +2,7 @@ using System;
 using static System.Math;
 public static class ordLeastSq{
 
-    public static (vector,matrix,vector) lsfit(Func<double, double>[] fs, vector x, vector y, vector dy){
+    public static (vector,matrix,vector) LSfit(Func<double, double>[] fs, vector x, vector y, vector dy){
         //input: data to fit {xi,yi,dyi} and fitting function
         //output: best fit coef {c_k} and uncertainty vector {delta_c_k}
         int n = x.size, m=fs.Length;
