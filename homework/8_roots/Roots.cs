@@ -13,11 +13,7 @@ public static class Roots{
     do{ // Newton's iterations
         if(fx.norm() < acc) break; // job done 
         Matrix J=Jacobian(f,x,fx,δx);
-
-        /* var QRofJ = givensQR(J);
-        vector Dx = QRofJ.solve(-fx); // Newton's step  */
-
-        vector Dx = QRGS.solve(J,-fx);
+        vector Dx = QRGS.solve(J,-fx); // Newton's step by Gram-Schmidt decomp
         double λ=1;
         do{ // linesearch 
             z=x+λ*Dx;

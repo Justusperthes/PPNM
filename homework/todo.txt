@@ -1,0 +1,56 @@
+| 0  | General
+---------------------------------------
+- Refactor for massive code duplication
+- Set op make clean for all projects
+
+| 1  | LinEq
+---------------------------------------
+- Do proofs
+
+| 2  | EVD
+---------------------------------------
+- 
+
+| 3  | LeastSquares
+---------------------------------------
+- Part 1: prove uncertainty of logarithm
+- Part 2: use sigma matrix for this
+
+| 4  | Splines
+---------------------------------------
+- Output plots as proofs
+
+| 5  | ODEs
+---------------------------------------
+
+
+| 6  | Integration
+---------------------------------------
+
+
+| 7  | Monte Carlo
+---------------------------------------
+- Part 1: Perform calculation of "difficult, singular integral" from problem
+- Part 1: MAYBE do a better proof of 1/sqrt(N) scaling
+- Part 2:
+- Part 3:
+
+| 8  | Roots
+---------------------------------------
+- Part 1: Try out root finding with some simple equations
+- Part 1: Extremum of Rosenbrock's valley function
+- Part 1: Find minimum of Himmelblau's function
+- Part 2:
+- Part 3:
+
+| 9  | Minimisation
+---------------------------------------
+- Part 1:
+- Part 2:
+- Part 3:
+
+| 10 | Neural Nets
+---------------------------------------
+- Part 1:
+- Part 2:
+- Part 3:
