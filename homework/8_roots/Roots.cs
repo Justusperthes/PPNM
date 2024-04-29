@@ -7,6 +7,14 @@ public static class Roots{
         double acc=1e-2,        // accuracy goal: on exit ‖f(x)‖ should be <acc 
         vector δx=null          // optional δx-vector for calculation of jacobian 
         ){
+    // check input
+    for (int i = 0; i < start.size; i++)
+    {
+        if (start[i]==0.0)
+        {
+            throw new ArgumentException("Start vector must contain only non-zero values.");
+        }
+    }
     double λmin = 0.01;
     vector x=start.copy();
     vector fx=f(x),z,fz;
@@ -37,11 +45,18 @@ public static class Roots{
         if(fx == null){ 
             fx = f(x);
             }
+	//x.print("jacobian x=");
+	//fx.print("jacobian fx=");
         Matrix J=new Matrix(x.size);
         for(int j=0;j < x.size;j++){
             x[j]+=dx[j];
+            //Console.WriteLine($"x[{j}]=" + x[j]);
             vector df=f(x)-fx;
-            for(int i=0;i < x.size;i++) J[i,j]=df[i]/dx[j];
+            for(int i=0;i < x.size;i++)
+            { 
+                J[i,j]=df[i]/dx[j];
+                //Console.WriteLine($"J=df[{i}]/dx[{j}]=" + J[i,j]);
+                }
             x[j]-=dx[j];
             }
         return J;

@@ -1,1 +1,7 @@
-         2          2 
+Roots of gradient of Rosenbrock function: x = 1.00000324783411, y = 1.00000643358627
+-2*(1-x)+100*2*(y-x*x)*(-2)*x with above values of x,y should yield 0:  3.13327486346308E-05
+100*2*(y-x*x) with above values of x,y should yield 0: -1.24184998728794E-05
+
+Roots of gradient of Himmelblau function: x = 3.00000043173237, y = 1.99999981180428
+2 * (-7 + x + y*y + 2 * x * (-11 + x*x + y)) with above values of x,y should yield 0:  2.81842871083476E-05
+2 * (-11 + x*x + y + 2 * y * (-7 + x + y*y)) with above values of x,y should yield 0:  + 2.23599365033153E-06)
