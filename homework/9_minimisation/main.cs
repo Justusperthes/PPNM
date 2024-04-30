@@ -3,27 +3,24 @@ using CommonClasses;
 
 public static class main{
     public static void Main(string[] args) {
-        
-        // Define an objective function
-        Func<vector, double> objectiveFunction = x =>
-        {
-            // Example objective function: f(x) = x^2
-            return x[0] * x[0] + + 3*x[0] + 1;
-        };
+        Func<vector,double> Rosenbrock = (vector v) =>
+            {
+                double x = v[0];
+                double y = v[1];
+                double z = Math.Pow((1-x),2)+100*Math.Pow((y-Math.Pow(x,2)),2);
+                return z;
+            };
 
-        // Choose a starting point
-        vector startingPoint = new vector(1); // Assuming 1-dimensional problem
-        startingPoint[0] = 3.0; // Starting point x = 3
+        vector startingPoint = new vector(1.5, 1.5);
 
-        // Call the Newton method
-        vector result = Minimisation.Newton(objectiveFunction, startingPoint);
+        vector result = Minimisation.Newton(Rosenbrock, startingPoint);
 
-        // Print the result
-        Console.WriteLine("Optimal solution found:");
+        Console.WriteLine("Solution found at (x,y) = ");
         result.print();
 
-        // You can also print the value of the objective function at the optimal solution
-        double objectiveValue = objectiveFunction(result);
-        Console.WriteLine("Objective function value at the optimal solution: " + objectiveValue);
+        double objectiveValue = Rosenbrock(result);
+        Console.WriteLine("Value of f(x,y) at the minimum: " + objectiveValue);
+
+        
     }
 }

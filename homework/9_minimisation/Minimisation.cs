@@ -15,13 +15,19 @@ public static class Minimisation{
             var H = Hessian(φ,x);
             var dx = QRGS.solve(H,-del_φ);
             double λ=1,φx=φ(x);
+            int step = 0;
             do{ /* linesearch */
+                step += 1;
                 if( φ(x+λ*dx) < φx ) break; /* good step: accept */
                 if( λ < λmin ) break; /* accept anyway */
+                if( step>1000){ 
+                    Console.WriteLine("1000 step limit reached; break");
+                    break;
+                }
                 λ/=2;
-            }while(true);
+            }while(true); //inner
             x+=λ*dx;
-        }while(true);
+        }while(true); //outer 
         return x;
     }//Newton
 

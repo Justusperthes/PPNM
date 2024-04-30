@@ -1,4 +1,23 @@
 CommonClasses.vector
-Optimal solution found:
-      -1.5 
-Objective function value at the optimal solution: -1.24999981753998
+CommonClasses.vector
+CommonClasses.vector
+CommonClasses.vector
+CommonClasses.vector
+CommonClasses.vector
+CommonClasses.vector
+CommonClasses.vector
+CommonClasses.vector
+CommonClasses.vector
+CommonClasses.vector
+CommonClasses.vector
+CommonClasses.vector
+CommonClasses.vector
+CommonClasses.vector
+CommonClasses.vector
+CommonClasses.vector
+CommonClasses.vector
+CommonClasses.vector
+CommonClasses.vector
+Solution found at (x,y) = 
+         1          1 
+Value of f(x,y) at the minimum: 9.13647921119182E-10
