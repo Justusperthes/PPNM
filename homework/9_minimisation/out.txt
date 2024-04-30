@@ -1,1 +1,4 @@
-This is from Minimisation class
+CommonClasses.vector
+Optimal solution found:
+      -1.5 
+Objective function value at the optimal solution: -1.24999981753998
