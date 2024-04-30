@@ -47,7 +47,7 @@
 
 | 9  | Minimisation
 ---------------------------------------
-- Part 1:
+- Part 1: Make pretty prints (especially Himmelblau needs all for minima).
 - Part 2:
 - Part 3:
 
