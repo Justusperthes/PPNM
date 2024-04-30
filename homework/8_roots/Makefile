@@ -25,8 +25,5 @@ QRGS.dll : QRGS.cs Matrix.dll #; $(MKLIB)
 Roots.dll : Roots.cs Matrix.dll QRGS.dll #; $(MKLIB)
 	$(CSC) -reference:Matrix.dll -reference:QRGS.dll -target:library -out:$@ Roots.cs
 
-test.exe : test.cs
-	$(CSC) $<
-
 clean:
 	$(RM) *.dll *.exe [Oo]ut*

@@ -11,6 +11,7 @@ public static class Minimisation{
         vector x,              /* starting point */
         double acc=1e-3        /* accuracy goal, on exit |∇φ| should be < acc */
     ){
+        double λmin = 0.01;
         do{ /* Newton's iterations */
             var del_φ = gradient(φ,x);
             if(del_φ.norm() < acc) break; /* job done */
@@ -50,7 +51,8 @@ public static class Minimisation{
 		double dx=Max(Abs(x[j]),1)*Pow(2,-13); /* for numerical gradient */
 		x[j]+=dx;
 		vector d_del_φ=gradient(φ,x)-del_φx;
-		for(int i=0;i<x.size;i++) H[i,j]=d_del_φ[i]/dx[j];
+        Console.WriteLine(d_del_φ.GetType());
+		for(int i=0;i<x.size;i++) H[i,j]=d_del_φ[i]/dx;//[j];
 		x[j]-=dx;
 	}
 	//return H;
