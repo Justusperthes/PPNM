@@ -1,6 +1,7 @@
 using static System.Console;
 using System;
 using System.Collections.Generic;
+namespace CommonClasses;
 public static class QRGS{
     static QRGS()
     {

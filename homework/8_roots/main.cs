@@ -2,28 +2,6 @@ using System;
 using static System.Math;
 public static class main{
     public static void Main(string[] args) {
-        /* Func<vector, vector> f = (vector x) =>
-        {
-            double y1 = x[0] * x[0] - 4;
-            return new vector(y1);
-        };
-        vector start = new vector(0.0);
-        vector root = Roots.Newton(f, start);
-        root.print(); */
-    
-        /* Func<vector, vector> f = (vector v) =>
-            {
-                double x = v[0];
-                double y = v[1];
-                vector result = new vector(x - 7, y - 9);
-                return result;
-            };
-        
-            vector start = new vector(1.5, 1.5);
-            vector root = Roots.Newton(f, start);
-
-            Console.WriteLine("Root: x = " + root[0] + ", y = " + root[1]); */
-
         Func<vector, vector> Rosenbrock = (vector v) =>
             {
                 double x = v[0];

@@ -1,6 +1,5 @@
 using System;
 using static System.Math;
-using CommonClasses;
 public static class Roots{
     public static vector Newton(
         Func<vector,vector> f,  // the function to find the root of 

@@ -12,12 +12,17 @@ all: out.txt; cat $<
 out.txt: main.exe
 	$(RUN) $< > $@
 
-main.exe: main.cs $(COMMON_CLASSES_DIR)/TestNamespace.cs
-	$(CSC) main.cs -r:$(COMMON_CLASSES_DIR)/TestNamespace.dll
+main.exe: main.cs $(COMMON_CLASSES_DIR)/Matrix.dll Minimisation.cs 
+	$(CSC) main.cs -reference:$(COMMON_CLASSES_DIR)/Matrix.dll -r:Minimisation.dll
 
-$(COMMON_CLASSES_DIR)/TestNamespace.dll: $(COMMON_CLASSES_DIR)/TestNamespace.cs
-	mcs $(COMMON_CLASSES_DIR)/TestNamespace.cs -target:library -out:$@
+$(COMMON_CLASSES_DIR)/Matrix.dll: $(COMMON_CLASSES_DIR)/vector.cs $(COMMON_CLASSES_DIR)/Matrix.cs
+	mcs -target:library -out:$@ $^
 
+$(COMMON_CLASSES_DIR)/QRGS.dll: $(COMMON_CLASSES_DIR)/QRGS.cs $(COMMON_CLASSES_DIR)/Matrix.dll
+	$(CSC) -reference:$(COMMON_CLASSES_DIR)/Matrix.dll -target:library -out:$@ $(COMMON_CLASSES_DIR)/QRGS.cs
+
+Minimisation.dll: Minimisation.cs $(COMMON_CLASSES_DIR)/Matrix.dll
+	$(CSC) -r:$(COMMON_CLASSES_DIR)/Matrix.dll Minimisation.cs -target:library -out:$@
 
 clean:
 	$(RM) *.dll *.exe [Oo]ut*
