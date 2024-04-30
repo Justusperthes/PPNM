@@ -1,23 +1,8 @@
-CommonClasses.vector
-CommonClasses.vector
-CommonClasses.vector
-CommonClasses.vector
-CommonClasses.vector
-CommonClasses.vector
-CommonClasses.vector
-CommonClasses.vector
-CommonClasses.vector
-CommonClasses.vector
-CommonClasses.vector
-CommonClasses.vector
-CommonClasses.vector
-CommonClasses.vector
-CommonClasses.vector
-CommonClasses.vector
-CommonClasses.vector
-CommonClasses.vector
-CommonClasses.vector
-CommonClasses.vector
 Solution found at (x,y) = 
          1          1 
 Value of f(x,y) at the minimum: 9.13647921119182E-10
+Completed in 12 steps.
+Solution found at (x,y) = 
+     -2.81       3.13 
+Value of f(x,y) at the minimum: 2258.75120493986
+Completed in 16 steps.

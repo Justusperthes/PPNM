@@ -2,6 +2,7 @@ using System;
 using static System.Math;
 public static class main{
     public static void Main(string[] args) {
+        
         Func<vector, vector> Rosenbrock = (vector v) =>
             {
                 double x = v[0];
