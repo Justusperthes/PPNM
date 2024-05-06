@@ -4,5 +4,5 @@ Value of f(x,y) at the minimum: 9.13647921119182E-10
 Completed in 12 steps.
 Solution found at (x,y) = 
      -2.81       3.13 
-Value of f(x,y) at the minimum: 2258.75120493986
+Value of f(x,y) at the minimum: 2.85830900723755E-14
 Completed in 16 steps.
