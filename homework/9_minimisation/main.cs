@@ -13,7 +13,7 @@ public static class main{
 
         //Rosenbrock
         Func<vector,double> Rosenbrock = (vector v) =>
-            {
+            { 
                 x = v[0];
                 y = v[1];
                 f = Math.Pow((1-x),2)+100*Math.Pow((y-Math.Pow(x,2)),2);

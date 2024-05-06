@@ -2,7 +2,7 @@
 ---------------------------------------
 - Refactor for massive code duplication
     - Common class files that can be extended with methods when needed
-- Set op make clean for all projects
+- Set up make clean for all projects
 
 | 1  | LinEq
 ---------------------------------------
