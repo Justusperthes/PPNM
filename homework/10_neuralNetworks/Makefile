@@ -13,18 +13,9 @@ all: out.txt; cat $<
 out.txt: main.exe
 	$(RUN) $< > $@
 
-main.exe: main.cs Matrix.dll QRGS.dll Minimisation.dll ann.dll ; $(MKEXE)
+main.exe: main.cs ann.dll ; $(MKEXE)
 
-Matrix.dll: $(COMMON_CLASSES_DIR)/vector.cs $(COMMON_CLASSES_DIR)/Matrix.cs ; $(MKLIB)
-
-QRGS.dll: $(COMMON_CLASSES_DIR)/QRGS.cs $(COMMON_CLASSES_DIR)/Matrix.dll ; $(MKLIB)
-
-Minimisation.dll: $(OTHER_DIR)/Minimisation.cs \
-		$(COMMON_CLASSES_DIR)/Matrix.dll \
-		$(COMMON_CLASSES_DIR)/QRGS.dll \
-		; $(MKLIB);
-
-ann.dll: ann.cs Matrix.dll ; $(MKLIB)
+ann.dll: ann.cs ; $(MKLIB)
 
 clean:
 	$(RM) *.dll *.exe [Oo]ut*

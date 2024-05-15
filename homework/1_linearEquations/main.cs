@@ -1,21 +1,22 @@
 using static System.Console;
 using System;
+using CommonClasses;
 class main{
 static void Main(){
 	
 	int n = 7;
 	int m = 5;
 	double range = 100.0;
-	WriteLine($"Here is a random {n}x{m} matrix A:");
-	var A = new matrix(n,m);
+	WriteLine($"Here is a random {n}x{m} Matrix A:");
+	var A = new Matrix(n,m);
 	A.FillWithRandom(-range,range);
 	A.print();
 	WriteLine("Doing QR-decomposition on A to get:");
 	DateTime startTime = DateTime.Now; //start measuring time
-	ValueTuple<matrix, matrix> QR = QRGS.decomp(A);
+	ValueTuple<Matrix, Matrix> QR = QRGS.decomp(A);
 	DateTime endTime = DateTime.Now; //end measuring time
-	matrix Q = QR.Item1;
-	matrix R = QR.Item2;
+	Matrix Q = QR.Item1;
+	Matrix R = QR.Item2;
 	WriteLine("Q = ");
 	Q.print();
 	WriteLine("R = ");
@@ -42,7 +43,7 @@ static void Main(){
 	WriteLine($"The determinant of A: det(A) = {det}");
 	
 	WriteLine("\nInverse of R by Gram-Schmidt QR-decomp:");
-	matrix inverse = QRGS.inverse(R);
+	Matrix inverse = QRGS.inverse(R);
 	inverse.print();
 
 	WriteLine("\nProduct of R and R^-1 should equal identity:");

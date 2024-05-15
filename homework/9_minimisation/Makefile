@@ -9,7 +9,7 @@ RUN = mono
 
 all: out.txt; cat $<
 
-out.txt: main.exe
+out.txt: main.exe 
 	$(RUN) $< > $@
 
 main.exe: main.cs Matrix.dll QRGS.dll Minimisation.dll

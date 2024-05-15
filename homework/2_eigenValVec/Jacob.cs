@@ -1,6 +1,8 @@
 using static System.Math;
-public static class jacobi{
-    public static void timesJ(matrix A, int p, int q, double theta){
+
+using CommonClasses;
+public static class Jacobi{
+    public static void timesJ(Matrix A, int p, int q, double theta){
         double c=Cos(theta),s=Sin(theta);
         for(int i=0;i<A.size1;i++){
             double aip=A[i,p], aiq=A[i,q];
@@ -8,7 +10,7 @@ public static class jacobi{
             A[i,q]=s*aip+c*aiq;
             }
     }//timesJ
-    static void Jtimes(matrix A, int p, int q, double theta){
+    static void Jtimes(Matrix A, int p, int q, double theta){
         double c=Cos(theta),s=Sin(theta);
         for(int j=0;j<A.size1;j++){
             double apj=A[p,j],aqj=A[q,j];
@@ -16,11 +18,11 @@ public static class jacobi{
             A[q,j]=-s*apj+c*aqj;
             }
     }//Jtimes
-    public static (vector,matrix) cyclic(matrix M){
-        matrix A=M.copy();
-        matrix V=matrix.id(M.size1);
+    public static (vector,Matrix) cyclic(Matrix M){
+        Matrix A=M.copy();
+        Matrix V=Matrix.id(M.size1);
         vector w=new vector(M.size1);
-        /* run Jacobi rotations on A and update V */
+        /* run Jacob rotations on A and update V */
         /* copy diagonal elements into w */
         bool changed;
         do
@@ -49,8 +51,5 @@ public static class jacobi{
         }
         return (w,V);
         }//cyclic
-      
- 
-    
 
-    }//jacobi
+    }//Jacob
