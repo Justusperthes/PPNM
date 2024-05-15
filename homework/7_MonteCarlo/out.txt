@@ -1,2 +1,2 @@
-Estimated integral value with 100 samples: 3
-Estimated error: 0.173205080756888
+Estimated integral value with 100 samples: 3.08
+Estimated error: 0.168333003300007

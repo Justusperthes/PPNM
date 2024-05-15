@@ -1,6 +1,7 @@
 using System;
 using static System.Math;
 using System.Diagnostics;
+using CommonClasses;
 
 class main
 {

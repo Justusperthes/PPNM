@@ -1,8 +1,5 @@
 using System;
 using static System.Math;
-using System;
-
-using System;
 
 public class qspline
 {

@@ -2,7 +2,9 @@ CODE = $(filter %.cs,$^)
 LIBS = $(addprefix -reference:,$(filter %.dll,$^))
 MKEXE = mcs -target:exe -out:$@ $(LIBS) $(CODE)
 MKLIB = mcs -target:library -out:$@ $(LIBS) $(CODE)
+COMMON_CLASSES_DIR := ../common_classes
 CSC = mcs
+export MONO_PATH := $(COMMON_CLASSES_DIR)
 RUN = mono
 
 all: out.txt; cat $<
@@ -18,23 +20,23 @@ decay.gnuplot.png : data.txt Makefile
 	"data.txt" with lines title "Exponential fit", \
 	' | tee log.gpi | gnuplot
 
-plotter.dll : plotter.cs
-	$(CSC) -target:library -reference:matrix.dll -reference:ordLeastSq.dll -out:$@ $^
+Plotter.dll: Plotter.cs
+	$(CSC) -target:library -reference:Matrix.dll -reference:OrdLeastSq.dll -out:$@ $^
 
 out.txt: main.exe
 	$(RUN) $< > $@
 
-main.exe: main.cs matrix.dll ordLeastSq.dll QRGS.dll plotter.dll
-	$(CSC) -reference:matrix.dll -reference:ordLeastSq.dll -reference:QRGS.dll -reference:plotter.dll $<
+main.exe: main.cs Matrix.dll OrdLeastSq.dll QRGS.dll Plotter.dll
+	$(CSC) -reference:Matrix.dll -reference:OrdLeastSq.dll -reference:QRGS.dll -reference:Plotter.dll $<
 
-matrix.dll : vector.cs matrix.cs
+Matrix.dll: $(COMMON_CLASSES_DIR)/vector.cs $(COMMON_CLASSES_DIR)/Matrix.cs ; $(MKLIB)
 	$(CSC) -target:library -out:$@ $^
 
-QRGS.dll : QRGS.cs matrix.dll #; $(MKLIB)
-	$(CSC) -reference:matrix.dll -target:library -out:$@ QRGS.cs
+QRGS.dll: $(COMMON_CLASSES_DIR)/QRGS.cs Matrix.dll
+	$(CSC) -reference:$(COMMON_CLASSES_DIR)/Matrix.dll -target:library -out:$@ $(COMMON_CLASSES_DIR)/QRGS.cs
 
-ordLeastSq.dll : ordLeastSq.cs matrix.dll QRGS.dll #; $(MKLIB)
-	$(CSC) -reference:matrix.dll -reference:QRGS.dll -target:library -out:$@ ordLeastSq.cs
+OrdLeastSq.dll: OrdLeastSq.cs Matrix.dll QRGS.dll #; $(MKLIB)
+	$(CSC) -reference:Matrix.dll -reference:QRGS.dll -target:library -out:$@ OrdLeastSq.cs
 
 clean:
 	$(RM) *.dll *.exe [Oo]ut*

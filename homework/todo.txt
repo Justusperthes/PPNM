@@ -33,6 +33,7 @@
 ---------------------------------------
 - Part 1: Perform calculation of "difficult, singular integral" from problem
 - Part 1: MAYBE do a better proof of 1/sqrt(N) scaling
+- Part 1: get the plotting to take more intelligent steps
 - Part 2:
 - Part 3:
 
