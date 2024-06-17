@@ -4,38 +4,33 @@ using System.IO;
 using System.Diagnostics;
 class main{
     static void Main(){
-        /* double[] x = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0};
-        double[] y = {0,1,4,9,16,25,36,49,64,81,100}; */
         int n = 10;
         double[] x = new double[n];
         double[] y = new double[n];
-
         double steppy = 10.0 / (n - 1);
+        // populate x list with values dependent on step size steppy
         for (int i = 0; i < n; i++)
         {
             x[i] = i * steppy;
         }
-        
+        // populate y list with cos(x_i)
         for (int i = 0; i < n; i++)
         {
             y[i] = Cos(x[i]);
         }
+        double z = 9; // where to evaluate
 
-        double z = 9;
+        // lsplines
         var my_lspline = new lspline(x,y,z);
-        double integrateResult = my_lspline.integrate();
-        double evalResult = my_lspline.evaluate();
-        WriteLine(integrateResult);
-        WriteLine(evalResult);
-        var my_qspline = new qspline(x,y,z);
-        double QintegrateResult = my_qspline.Integral();
-        System.Console.WriteLine(QintegrateResult);
+        double lIntegrateResult = my_lspline.integrate();
+        double lEvalResult = my_lspline.evaluate();
+        WriteLine($"Antiderivative from 0 to {z} using lsplines: {lIntegrateResult}");
+        WriteLine($"The linearly interpolated value at {z} is {lEvalResult}");
         
-        // Generate interpolated data points
+        // lsplines: generate interpolated data points
         int numInterpolatedPoints = 1000;
         double[] xInterp = new double[numInterpolatedPoints];
         double[] yInterp = new double[numInterpolatedPoints];
-
         double step = (x[x.Length - 1] - x[0]) / (numInterpolatedPoints - 1);
         for (int i = 0; i < numInterpolatedPoints; i++)
         {
@@ -44,12 +39,37 @@ class main{
             yInterp[i] = my_lspline.evaluate();
         }
 
-        // Define file paths
-        string dataFilePath1 = "data.dat";
-        string dataFilePath2 = "interp_data.dat";
-        string plotFilePath = "combined_plot.png";
+        // lsplines: define file paths
+        string lDataFilePath1 = "l_data.dat";
+        string lDataFilePath2 = "l_interp_data.dat";
+        string lPlotFilePath = "l_cos_plot.png";
 
-        // Plot original and interpolated data points
-        GnuPlotHelper.PlotData(x, y, xInterp, yInterp, dataFilePath1, dataFilePath2, plotFilePath);
+        // lsplines: plot original and interpolated data points
+        GnuPlotHelper.PlotData(x, y, xInterp, yInterp, lDataFilePath1, lDataFilePath2, lPlotFilePath, "Lin Interpolation of Cos(x)");
+
+        // qsplines
+        var my_qspline = new qspline(x,y,z);
+        double QintegrateResult = my_qspline.Integral();
+        WriteLine($"Antiderivative from 0 to {z} using qsplines: {QintegrateResult}");
+        double qEvalResult = my_qspline.Evaluate();
+        WriteLine($"The quadratically interpolated value at {z} is {qEvalResult}");
+
+        // qsplines: generate interpolated data points
+        for (int i = 0; i < numInterpolatedPoints; i++)
+        {
+            xInterp[i] = x[0] + i * step;
+            my_qspline = new qspline(x, y, xInterp[i]);
+            yInterp[i] = my_qspline.Evaluate();
+        }
+
+        // qsplines: define file paths
+        string qDataFilePath1 = "q_data.dat";
+        string qDataFilePath2 = "q_interp_data.dat";
+        string qPlotFilePath = "q_cos_plot.png";
+
+        // qsplines: plot original and interpolated data points
+        GnuPlotHelper.PlotData(x, y, xInterp, yInterp, qDataFilePath1, qDataFilePath2, qPlotFilePath, "Q Interpolation of Cos(x)");
+
+
     }
 }

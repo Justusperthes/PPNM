@@ -4,7 +4,7 @@ using System.IO;
 
 public class GnuPlotHelper
 {
-    public static void PlotData(double[] x, double[] y, double[] x2, double[] y2, string dataFilePath1, string dataFilePath2, string plotFilePath)
+    public static void PlotData(double[] x, double[] y, double[] x2, double[] y2, string dataFilePath1, string dataFilePath2, string plotFilePath, string title)
     {
         // Write data points to a file
         using (StreamWriter writer = new StreamWriter(dataFilePath1))
@@ -28,7 +28,7 @@ public class GnuPlotHelper
         string gnuplotCommands = $@"
         set terminal pngcairo enhanced
         set output '{plotFilePath}'
-        set title 'Data Points'
+        set title '{title}'
         set xlabel 'X'
         set ylabel 'Y'
         plot '{dataFilePath1}' with points pointtype 7 pointsize 1.5 linecolor 'blue' title 'Original Data', \

@@ -23,4 +23,4 @@ GnuPlotHelper.dll : main.cs GnuPlotHelper.cs
 	$(CSC) -target:library -out:$@ GnuPlotHelper.cs
 
 clean:
-	$(RM) *.dll *.exe [Oo]ut*
+	$(RM) *.dll *.exe [Oo]ut* *.dat *.png *.txt
