@@ -20,16 +20,16 @@ public static class RK_integrator{
         var xlist=new genlist<double>(); xlist.add(x);
         var ylist=new genlist<vector>(); ylist.add(y);
         do{
-            Console.WriteLine("Inside do loop");
+            //Console.WriteLine("Inside do loop");
             if(x>=b) return (xlist,ylist); /* job done */
             if(x+h>b) h=b-x;               /* last step should end at b */
             var (yh,δy) = RKstep12(f,x,y,h);
             double tol = (acc+eps*yh.norm()) * Sqrt(h/(b-a));
             double err = δy.norm();
-            System.Console.WriteLine($"driver: err={err} tol={tol} h={h}");
+            //Console.WriteLine($"driver: err={err} tol={tol} h={h}");
                 if(err<=tol){ // accept step
                 x+=h; y=yh;
-                xlist.add(x);
+                xlist.add(x); 
                 ylist.add(y);
                 }
             h *= Min( Pow(tol/err,0.25)*0.95 , 2); // readjust stepsize

@@ -2,7 +2,6 @@ using System;
 class main{
     static void Main(){
         
-        
         Func<double, vector, vector> f = (double x, vector y) =>
         {
             double dydx = -x;
@@ -12,11 +11,11 @@ class main{
         var yy = new vector(1);
         var (xlist,ylist) = RK_integrator.driver(f,(0,10),ystart:yy,h:0.125,acc:0.01,eps:0.01);
 	    for(int i=0;i<xlist.size;i++){
-		    System.Console.WriteLine($"main: result: {xlist[i]} {ylist[i][0]}");
+		    //System.Console.WriteLine($"main: result: {xlist[i]} {ylist[i][0]}");
         }
     }
 }
-
+/* 
 public static vector f(double x, vector y)
     {
         double u = y[0]; // First component of the vector y is u
@@ -39,10 +38,10 @@ public static vector f(double x, vector y)
 
         var result = RK_integrator.driver(f, (a, b), ystart, h, acc, eps);
 
-        // Printing the result
+        // printing result 
         result.Item1.Print();
         result.Item2.Print();
-    }
+    } */
 
 
 
