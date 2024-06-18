@@ -1,37 +1,37 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CommonClasses;
 
 public class ann
 {
     int n; // number of hidden neurons
     Func<double, double> f; // activation function
     List<double> p; // network parameters
+    List<double> x, y; // training data
 
-    public ann(int n)
+    public ann(int n) 
     {
         this.n = n;
-        f = x => x * Math.Exp(-x * x); //gaussian wavelet activation function //sigmoid 1.0 / (1.0 + Math.Exp(-x));
+        //sigmoid activation function. Gaussian wavelet f = x => x * Math.Exp(-x * x);
+        f = x => 1.0 / (1.0 + Math.Exp(-x));
         p = new List<double>();
 
         Random rand = new Random();
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++) 
         {
-            //initialize parameters
-            p.Add(rand.NextDouble() * 2 - 1); // a_i in [-1, 1]
-            p.Add(rand.NextDouble() * 2 + 0.1); // b_i in [0.1, 2.1] to avoid division by zero
-            p.Add(rand.NextDouble() * 2 - 1); // w_i in [-1, 1]
-        }
-    }
-
-    //network response
-    public double Response(double x)
+            p.Add(i / (double)n); 
+            p.Add(1.0); 
+            p.Add(1.0); 
+        } 
+    }  
+    public double Response(double x, vector p)
     {
         double sum = 0.0;
         for (int i = 0; i < n; i++)
         {
             double a_i = p[3 * i];
-            double b_i = p[3 * i + 1]; 
+            double b_i = p[3 * i + 1];
             double w_i = p[3 * i + 2];
             double argument = (x - a_i) / b_i;
             double activation = f(argument);
@@ -40,65 +40,48 @@ public class ann
         return sum;
     }
 
-    //train network
-    public void Train(List<double> x, List<double> y)
+    public double Response(double x)
     {
-        // gradient descent parameters
-        double learningRate = 0.1;
-        int epochs = 2000;
-
-        for (int epoch = 0; epoch < epochs; epoch++)
-        {
-            List<double> gradients = new List<double>(new double[3 * n]);
-
-            //compute gradients
-            for (int i = 0; i < x.Count; i++)
-            {
-                double x_k = x[i];
-                double y_k = y[i];
-                double response = Response(x_k);
-                double error = response - y_k;
-
-                for (int j = 0; j < n; j++)
-                {
-                    double a_j = p[3 * j];
-                    double b_j = p[3 * j + 1];
-                    double w_j = p[3 * j + 2];
-                    double z_j = (x_k - a_j) / b_j;
-                    double f_z_j = f(z_j);
-                    double df_z_j = -2 * z_j * Math.Exp(-z_j * z_j);
-
-                    gradients[3 * j] += 2 * error * w_j * df_z_j / b_j;
-                    gradients[3 * j + 1] += 2 * error * w_j * df_z_j * z_j / (b_j * b_j);
-                    gradients[3 * j + 2] += 2 * error * f_z_j;
-                }
-            }
-
-            //update parameters
-            for (int i = 0; i < 3 * n; i++)
-            {
-                p[i] -= learningRate * gradients[i] / x.Count;
-            }
-
-            //optional: Log progress every 1000 epochs
-            if (epoch % 1000 == 0)
-            {
-                Console.WriteLine($"Epoch {epoch}: Error = {ComputeError(x, y)}");
-            }
-        }
+        vector currentParams = new vector(p.ToArray());
+        return Response(x, currentParams);
     }
 
-    // Compute the total error for the training set
-    public double ComputeError(List<double> x, List<double> y)
+    public double CostFunction(vector p)
     {
         double totalError = 0.0;
         for (int i = 0; i < x.Count; i++)
+        { 
+            double response = Response(x[i], p);
+            double error = response - y[i];
+            totalError += error * error;
+        }   
+        return totalError;  
+    } 
+  
+    public void Train(List<double> x, List<double> y)
+    {
+        this.x = x;  
+        this.y = y;     
+ 
+        vector initialParams = new vector(p.ToArray()); // Convert List<double> to vector
+        Func<vector, double> costFunc = CostFunction;
+     
+        Console.WriteLine("Starting Newton's optimization..."); 
+        var result = Minimisation.Newton(costFunc, initialParams, 1e-1, 100000);
+        p = new List<double>(result.Item1); // Explicit conversion from vector to List<double>
+        Console.WriteLine($"Training completed in {result.Item2} steps with final cost {costFunc(result.Item1)}.");
+    }
+ 
+    public double ComputeError(List<double> x, List<double> y)
+    {
+        double totalError = 0.0;
+        vector currentParams = new vector(p.ToArray()); // Convert List<double> to vector
+        for (int i = 0; i < x.Count; i++)
         {
-            double response = Response(x[i]);
+            double response = Response(x[i], currentParams); // Pass currentParams
             double error = response - y[i];
             totalError += error * error;
         }
         return totalError / x.Count;
     }
-
 }
