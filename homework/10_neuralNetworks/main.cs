@@ -1,36 +1,34 @@
-using System;
 using static System.Math;
+using static System.Console;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-public class main
-{
-    public static void Main()
-    {
-        // Define the function to interpolate
-        Func<double, double> g = z => Math.Cos(5 * z - 1) * Math.Exp(-z * z);
 
-        // Sample the function at several points on [-1, 1]
-        int numSamples = 100;
-        List<double> x = new List<double>(numSamples);
-        List<double> y = new List<double>(numSamples);
-        for (int i = 0; i < numSamples; i++)
+public static class main{
+     public static void Main()
+    {
+        // Sample function g(x) = Cos(5*x - 1) * Exp(-x*x)
+        Func<double, double> g = x => Math.Cos(5 * x - 1) * Math.Exp(-x * x); //2*x;
+
+        // Generate training data
+        List<double> x_train = new List<double>();
+        List<double> y_train = new List<double>();
+        Random rand = new Random();
+        for (int i = 0; i < 100; i++)
         {
-            double xi = -1 + 2.0 * i / (numSamples - 1);
-            x.Add(xi);
-            y.Add(g(xi));
+            double x = -1 + 2 * rand.NextDouble(); // Random x in [-1, 1]
+            x_train.Add(x);
+            y_train.Add(g(x)); // Corresponding y = g(x)
         }
 
-        // Create and train the neural network
-        ANN ann = new ANN(10); // 10 hidden neurons
-        ann.Train(x, y, 1000, 0.01); // 1000 epochs, learning rate 0.01
+        // Create and train the network
+        int numHiddenNeurons = 10;
+        ann myAnn = new ann(numHiddenNeurons);
+        myAnn.Train(x_train, y_train);
 
         // Test the network
-        for (int i = 0; i < numSamples; i++)
+        for (double x = -1; x <= 1; x += 0.1)
         {
-            double xi = x[i];
-            double yi = y[i];
-            double fi = ann.Response(xi);
-            Console.WriteLine($"x: {xi}, y: {yi}, f(x): {fi}");
+            Console.WriteLine($"x = {x:F2}, g(x) = {g(x):F4}, ANN(x) = {myAnn.Response(x):F4}");
         }
     }
 }

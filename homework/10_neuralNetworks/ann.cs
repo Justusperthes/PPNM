@@ -12,20 +12,31 @@ public class ann
     public ann(int n)
     {
         this.n = n;
-        f = x => Math.Exp(-x * x); // Gaussian activation function
-        p = new List<double>(new double[3 * n]); // parameters a_i, b_i, w_i
+        f = x => x * Math.Exp(-x * x); // Gaussian activation function
+        p = new List<double>();
+
+        Random rand = new Random();
+        for (int i = 0; i < n; i++)
+        {
+            // Initialize parameters to reasonable values
+            p.Add(rand.NextDouble() * 2 - 1); // a_i in [-1, 1]
+            p.Add(rand.NextDouble() * 2 + 0.1); // b_i in [0.1, 2.1] to avoid division by zero
+            p.Add(rand.NextDouble() * 2 - 1); // w_i in [-1, 1]
+        }
     }
 
     // Network response
     public double Response(double x)
     {
-        double sum = 0;
+        double sum = 0.0;
         for (int i = 0; i < n; i++)
         {
             double a_i = p[3 * i];
             double b_i = p[3 * i + 1];
             double w_i = p[3 * i + 2];
-            sum += f((x - a_i) / b_i) * w_i;
+            double argument = (x - a_i) / b_i;
+            double activation = f(argument);
+            sum += activation * w_i;
         }
         return sum;
     }
@@ -35,7 +46,7 @@ public class ann
     {
         // Gradient descent parameters
         double learningRate = 0.01;
-        int epochs = 10000;
+        int epochs = 100000;
 
         for (int epoch = 0; epoch < epochs; epoch++)
         {
@@ -69,5 +80,26 @@ public class ann
             {
                 p[i] -= learningRate * gradients[i] / x.Count;
             }
+
+            // Optional: Log progress every 1000 epochs
+            if (epoch % 1000 == 0)
+            {
+                Console.WriteLine($"Epoch {epoch}: Error = {ComputeError(x, y)}");
+            }
         }
     }
+
+    // Compute the total error for the training set
+    public double ComputeError(List<double> x, List<double> y)
+    {
+        double totalError = 0.0;
+        for (int i = 0; i < x.Count; i++)
+        {
+            double response = Response(x[i]);
+            double error = response - y[i];
+            totalError += error * error;
+        }
+        return totalError / x.Count;
+    }
+
+}

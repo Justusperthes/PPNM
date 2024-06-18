@@ -13,12 +13,11 @@ all: out.txt; cat $<
 out.txt: main.exe
 	$(RUN) $< > $@
 
-main.exe: main.cs ann.dll ; $(MKEXE)
+main.exe: main.cs ann.dll
+	$(CSC) -reference:ann.dll $<
 
-ann.dll: ann.cs ; $(MKLIB)
+ann.dll: ann.cs  #; $(MKLIB)
+	$(CSC) -target:library -out:$@ ann.cs
 
 clean:
 	$(RM) *.dll *.exe [Oo]ut*
-
-test:
-	ls $(OTHER_DIR)
