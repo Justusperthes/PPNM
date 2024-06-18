@@ -2,23 +2,19 @@ Rosenbrock function has minimum at (x,y) =
          1          1 
 Value of f(x,y) at the minimum: 9.13288696092299E-10
 Completed in 12 steps.
-Himmelblau function has minimum at (x,y) = 
+Himmelblau function has one minimum at (x,y) = 
      -3.78      -3.28 
-Value of f(x,y) at the minimum: 1.2948846408797E-11
+Value of f(x,y) at this minimum: 1.2948846408797E-11
 Completed in 5 steps.
-Himmelblau function has minimum at (x,y) = 
+Himmelblau function has one minimum at (x,y) = 
      -2.81       3.13 
-Value of f(x,y) at the minimum: 3.1186454992383E-14
+Value of f(x,y) at this minimum: 3.1186454992383E-14
 Completed in 6 steps.
-Himmelblau function has minimum at (x,y) = 
+Himmelblau function has one minimum at (x,y) = 
       3.58      -1.85 
-Value of f(x,y) at the minimum: 9.70090399154333E-09
+Value of f(x,y) at this minimum: 9.70090399154333E-09
 Completed in 6 steps.
-Himmelblau function has minimum at (x,y) = 
+Himmelblau function has one minimum at (x,y) = 
          3          2 
-Value of f(x,y) at the minimum: 7.0810127818781E-10
+Value of f(x,y) at this minimum: 7.0810127818781E-10
 Completed in 6 steps.
-Himmelblau function has minimum at (x,y) = 
-     -3.78      -3.28 
-Value of f(x,y) at the minimum: 8.29414284256403E-14
-Completed in 5 steps.

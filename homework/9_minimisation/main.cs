@@ -43,20 +43,12 @@ public static class main{
             for (int j = 0; j < 2; j++){
                 startingPoint = new vector(xs[i],ys[j]);
                 (result, steps) = Minimisation.Newton(Himmelblau, startingPoint);
-                Console.WriteLine("Himmelblau function has minimum at (x,y) = ");
+                Console.WriteLine("Himmelblau function has one minimum at (x,y) = ");
                 result.print();
                 objectiveValue = Himmelblau(result);
-                Console.WriteLine("Value of f(x,y) at the minimum: " + objectiveValue);
+                Console.WriteLine("Value of f(x,y) at this minimum: " + objectiveValue);
                 Console.WriteLine($"Completed in {steps} steps.");
             }
         }
-        //Find minimum 2
-        startingPoint = new vector(-5.0,-5.0);
-        (result, steps) = Minimisation.Newton(Himmelblau, startingPoint);
-        Console.WriteLine("Himmelblau function has minimum at (x,y) = ");
-        result.print();
-        objectiveValue = Himmelblau(result);
-        Console.WriteLine("Value of f(x,y) at the minimum: " + objectiveValue);
-        Console.WriteLine($"Completed in {steps} steps.");
     }
 }

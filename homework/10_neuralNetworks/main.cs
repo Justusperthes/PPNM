@@ -21,7 +21,7 @@ public static class main{
         }
 
         //create and train network
-        int numHiddenNeurons = 10;
+        int numHiddenNeurons = 20;
         ann myAnn = new ann(numHiddenNeurons);
         myAnn.Train(x_train, y_train);
 

@@ -1,0 +1,4 @@
+Estimated integral value with 100000 samples: 3.13496. Should equal PI.
+Estimated error: 0.00520755777538761
+Estimated integral value with 1000000 samples: 1.3919567622813. Should equal approx 1.3932.
+Estimated error: 0.00764303681603855
