@@ -13,25 +13,26 @@ public static class main
 
         //training data
         List<double> x_train = new List<double>();
-        List<double> y_train = new List<double>();
+        List<double> y_train = new List<double>(); 
         Random rand = new Random();
         for (int i = 0; i < 20; i++)
         {
-            double x = -1 + 2 * rand.NextDouble(); // Random x in [-1, 1]
+            double x = -1 + 2 * rand.NextDouble(); 
             x_train.Add(x);
             y_train.Add(g(x)); // y = g(x)
         }
 
         //create and train network
-        int numHiddenNeurons = 4; 
+        int numHiddenNeurons = 5; 
         ann myAnn = new ann(numHiddenNeurons);
         WriteLine("Running training now...");
         myAnn.Train(x_train, y_train);
 
-        // Test network
+        //test network
         for (double x = -1; x <= 1; x += 0.1)
         {
             WriteLine($"x = {x:F2}, g(x) = {g(x):F4}, ANN(x) = {myAnn.Response(x):F4}");
         }
     }
 }
+ 

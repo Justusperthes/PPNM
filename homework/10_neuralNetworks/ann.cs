@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CommonClasses;
+using static System.Math;
 
 public class ann
 {
@@ -10,20 +11,23 @@ public class ann
     List<double> p; // network parameters
     List<double> x, y; // training data
 
-    public ann(int n) 
-    {
+    public ann(int n)  
+    {  
         this.n = n;
-        //sigmoid activation function. Gaussian wavelet f = x => x * Math.Exp(-x * x);
-        f = x => 1.0 / (1.0 + Math.Exp(-x));
+        //sigmoid or Gaussian wavelet activation function
+        f = x => 1.0 / (1.0 + Math.Exp(-x)); //sigmoid
+        //f = x => x * Math.Exp(-x * x); //wavelet
+        //f = x => Math.Exp(-x * x); //Gaussian
+        //f = x => Math.Max(0, x); //ReLU
+        //f = x => Cos(5*x - 1) * Exp(-x*x); /trivial
         p = new List<double>();
 
-        Random rand = new Random();
         for (int i = 0; i < n; i++) 
         {
             p.Add(i / (double)n); 
             p.Add(1.0); 
-            p.Add(1.0); 
-        } 
+            p.Add(1.0);  
+        }  
     }  
     public double Response(double x, vector p)
     {
@@ -41,9 +45,9 @@ public class ann
     }
 
     public double Response(double x)
-    {
-        vector currentParams = new vector(p.ToArray());
-        return Response(x, currentParams);
+    { 
+        vector currentParams = new vector(p.ToArray()); 
+        return Response(x, currentParams); 
     }
 
     public double CostFunction(vector p)
@@ -63,22 +67,22 @@ public class ann
         this.x = x;  
         this.y = y;     
  
-        vector initialParams = new vector(p.ToArray()); // Convert List<double> to vector
+        vector initialParams = new vector(p.ToArray());
         Func<vector, double> costFunc = CostFunction;
      
         Console.WriteLine("Starting Newton's optimization..."); 
         var result = Minimisation.Newton(costFunc, initialParams, 1e-1, 100000);
-        p = new List<double>(result.Item1); // Explicit conversion from vector to List<double>
+        p = new List<double>(result.Item1);
         Console.WriteLine($"Training completed in {result.Item2} steps with final cost {costFunc(result.Item1)}.");
     }
  
     public double ComputeError(List<double> x, List<double> y)
     {
         double totalError = 0.0;
-        vector currentParams = new vector(p.ToArray()); // Convert List<double> to vector
+        vector currentParams = new vector(p.ToArray()); 
         for (int i = 0; i < x.Count; i++)
         {
-            double response = Response(x[i], currentParams); // Pass currentParams
+            double response = Response(x[i], currentParams); 
             double error = response - y[i];
             totalError += error * error;
         }
