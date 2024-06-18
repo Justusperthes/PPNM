@@ -1,2 +1,4 @@
-Estimated integral value with 100 samples: 3.08
-Estimated error: 0.168333003300007
+Estimated integral value with 10000 samples: 3.1392
+Estimated error: 0.0164384408019739
+Estimated integral value with 1000000 samples: 1.38752209827037
+Estimated error: 0.00593532085064563

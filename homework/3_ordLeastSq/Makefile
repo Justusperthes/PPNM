@@ -33,10 +33,10 @@ Matrix.dll: $(COMMON_CLASSES_DIR)/vector.cs $(COMMON_CLASSES_DIR)/Matrix.cs ; $(
 	$(CSC) -target:library -out:$@ $^
 
 QRGS.dll: $(COMMON_CLASSES_DIR)/QRGS.cs Matrix.dll
-	$(CSC) -reference:$(COMMON_CLASSES_DIR)/Matrix.dll -target:library -out:$@ $(COMMON_CLASSES_DIR)/QRGS.cs
+	$(CSC) -reference:Matrix.dll -target:library -out:$@ $(COMMON_CLASSES_DIR)/QRGS.cs
 
 OrdLeastSq.dll: OrdLeastSq.cs Matrix.dll QRGS.dll #; $(MKLIB)
 	$(CSC) -reference:Matrix.dll -reference:QRGS.dll -target:library -out:$@ OrdLeastSq.cs
 
 clean:
-	$(RM) *.dll *.exe [Oo]ut*
+	$(RM) *.dll *.exe [Oo]ut* *.png *.txt

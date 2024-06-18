@@ -2,7 +2,9 @@ CODE = $(filter %.cs,$^)
 LIBS = $(addprefix -reference:,$(filter %.dll,$^))
 MKEXE = mcs -target:exe -out:$@ $(LIBS) $(CODE)
 MKLIB = mcs -target:library -out:$@ $(LIBS) $(CODE)
+COMMON_CLASSES_DIR := ../common_classes
 CSC = mcs
+export MONO_PATH := $(COMMON_CLASSES_DIR)
 RUN = mono --debug
 
 all: error.gnuplot.png linerror.gnuplot.png out.txt
@@ -42,17 +44,14 @@ linerror.data.txt: main.exe
 main.exe: main.cs vector.dll mc.dll
 	$(CSC) -reference:vector.dll -reference:mc.dll $<
 
-vector.dll : vector.cs 
-	$(CSC) -target:library -out:$@ vector.cs
+vector.dll : $(COMMON_CLASSES_DIR)/vector.cs 
+	$(CSC) -target:library -out:$@ $(COMMON_CLASSES_DIR)/vector.cs
 	
 mc.dll : mc.cs vector.dll
 	$(CSC) -reference:vector.dll -target:library -out:$@ mc.cs
 
-test.exe : test.cs
-	$(CSC) $<
-
 clean:
-	$(RM) *.dll *.exe [Oo]ut*
+	$(RM) *.dll *.exe [Oo]ut* *.png *.txt
 
 
 # ordLeastSq.dll : ordLeastSq.cs matrix.dll QRGS.dll #; $(MKLIB)

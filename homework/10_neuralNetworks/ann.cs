@@ -8,11 +8,10 @@ public class ann
     Func<double, double> f; // activation function
     List<double> p; // network parameters
 
-    // Constructor
     public ann(int n)
     {
         this.n = n;
-        f = x => x * Math.Exp(-x * x); // Gaussian activation function
+        f = x => x * Math.Exp(-x * x); // Gaussian wavelet activation function
         p = new List<double>();
 
         Random rand = new Random();
@@ -41,57 +40,15 @@ public class ann
         return sum;
     }
 
-    // Training the network
-    public void Train(List<double> x, List<double> y)
+    // Compute the cost function
+    public double CostFunction(vector parameters, List<double> x, List<double> y)
     {
-        // Gradient descent parameters
-        double learningRate = 0.01;
-        int epochs = 100000;
-
-        for (int epoch = 0; epoch < epochs; epoch++)
+        // Update the network parameters with the new vector
+        for (int i = 0; i < parameters.size; i++)
         {
-            List<double> gradients = new List<double>(new double[3 * n]);
-
-            // Compute gradients
-            for (int i = 0; i < x.Count; i++)
-            {
-                double x_k = x[i];
-                double y_k = y[i];
-                double response = Response(x_k);
-                double error = response - y_k;
-
-                for (int j = 0; j < n; j++)
-                {
-                    double a_j = p[3 * j];
-                    double b_j = p[3 * j + 1];
-                    double w_j = p[3 * j + 2];
-                    double z_j = (x_k - a_j) / b_j;
-                    double f_z_j = f(z_j);
-                    double df_z_j = -2 * z_j * Math.Exp(-z_j * z_j);
-
-                    gradients[3 * j] += 2 * error * w_j * df_z_j / b_j;
-                    gradients[3 * j + 1] += 2 * error * w_j * df_z_j * z_j / (b_j * b_j);
-                    gradients[3 * j + 2] += 2 * error * f_z_j;
-                }
-            }
-
-            // Update parameters
-            for (int i = 0; i < 3 * n; i++)
-            {
-                p[i] -= learningRate * gradients[i] / x.Count;
-            }
-
-            // Optional: Log progress every 1000 epochs
-            if (epoch % 1000 == 0)
-            {
-                Console.WriteLine($"Epoch {epoch}: Error = {ComputeError(x, y)}");
-            }
+            p[i] = parameters[i];
         }
-    }
 
-    // Compute the total error for the training set
-    public double ComputeError(List<double> x, List<double> y)
-    {
         double totalError = 0.0;
         for (int i = 0; i < x.Count; i++)
         {
@@ -99,7 +56,28 @@ public class ann
             double error = response - y[i];
             totalError += error * error;
         }
-        return totalError / x.Count;
+        return totalError;
     }
 
+    // Train the network using the Minimisation class
+    public void Train(List<double> x, List<double> y, double accuracy = 1e-3)
+    {
+        // Define the cost function for minimisation
+        Func<vector, double> costFunc = parameters => CostFunction(parameters, x, y);
+
+        // Convert the initial parameters to vector type
+        vector initialParameters = new vector(p.ToArray());
+
+        // Minimize the cost function using the Minimisation class
+        var result = Minimisation.Newton(costFunc, initialParameters, accuracy);
+        vector optimalParameters = result.Item1;
+
+        // Update the network parameters with the optimal values
+        for (int i = 0; i < optimalParameters.size; i++)
+        {
+            p[i] = optimalParameters[i];
+        }
+
+        Console.WriteLine($"Optimization completed in {result.Item2} steps.");
+    }
 }

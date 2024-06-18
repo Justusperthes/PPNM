@@ -16,13 +16,13 @@ out2: test.exe
 	$(RUN) $< > $@
 
 main.exe: main.cs Matrix.dll Jacobi.dll
-	$(CSC) -reference:$(COMMON_CLASSES_DIR)/Matrix.dll -reference:Jacobi.dll $<
+	$(CSC) -reference:Matrix.dll -reference:Jacobi.dll $<
 
 Matrix.dll: $(COMMON_CLASSES_DIR)/vector.cs $(COMMON_CLASSES_DIR)/Matrix.cs ; $(MKLIB)
 	mcs -target:library -out:$@ $^
 
 Jacobi.dll : Jacob.cs Matrix.dll #; $(MKLIB)
-	$(CSC) -reference:$(COMMON_CLASSES_DIR)/Matrix.dll -target:library -out:$@ Jacob.cs
+	$(CSC) -reference:Matrix.dll -target:library -out:$@ Jacob.cs
 
 clean:
 	$(RM) *.dll *.exe [Oo]ut*

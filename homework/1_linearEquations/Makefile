@@ -16,13 +16,13 @@ out2: test.exe
 	$(RUN) $< > $@
 
 main.exe: main.cs Matrix.dll QRGS.dll
-	$(CSC) main.cs -reference:$(COMMON_CLASSES_DIR)/Matrix.dll -reference:$(COMMON_CLASSES_DIR)/QRGS.dll
+	$(CSC) main.cs -reference:Matrix.dll -reference:QRGS.dll
 
 Matrix.dll: $(COMMON_CLASSES_DIR)/vector.cs $(COMMON_CLASSES_DIR)/Matrix.cs ; $(MKLIB)
 	mcs -target:library -out:$@ $^
 
 QRGS.dll: $(COMMON_CLASSES_DIR)/QRGS.cs Matrix.dll
-	$(CSC) -reference:$(COMMON_CLASSES_DIR)/Matrix.dll -target:library -out:$@ $(COMMON_CLASSES_DIR)/QRGS.cs
+	$(CSC) -reference:Matrix.dll -target:library -out:$@ $(COMMON_CLASSES_DIR)/QRGS.cs
 
 clean:
 	$(RM) *.dll *.exe [Oo]ut*

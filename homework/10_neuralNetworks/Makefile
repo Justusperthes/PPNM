@@ -13,11 +13,20 @@ all: out.txt; cat $<
 out.txt: main.exe
 	$(RUN) $< > $@
 
-main.exe: main.cs ann.dll
-	$(CSC) -reference:ann.dll $<
+main.exe: main.cs ann.dll Matrix.dll QRGS.dll Minimisation.dll
+	$(CSC) -reference:ann.dll -reference:$(COMMON_CLASSES_DIR)/Matrix.dll -reference:$(COMMON_CLASSES_DIR)/QRGS.dll -reference:$(OTHER_DIR)/Minimisation.dll $<
+
+Matrix.dll: $(COMMON_CLASSES_DIR)/vector.cs $(COMMON_CLASSES_DIR)/Matrix.cs ; $(MKLIB)
+	mcs -target:library -out:$@ $^
 
 ann.dll: ann.cs  #; $(MKLIB)
-	$(CSC) -target:library -out:$@ ann.cs
+	$(CSC) -reference:$(COMMON_CLASSES_DIR)/Matrix.dll -target:library -out:$@ ann.cs
+
+QRGS.dll: $(COMMON_CLASSES_DIR)/QRGS.cs Matrix.dll
+	$(CSC) -reference:$(COMMON_CLASSES_DIR)/Matrix.dll -reference:$(OTHER_DIR)/Minimisation.dll -target:library -out:$@ $(COMMON_CLASSES_DIR)/QRGS.cs
+
+Minimisation.dll: Minimisation.cs Matrix.dll QRGS.dll
+	$(CSC) -r:$(COMMON_CLASSES_DIR)/Matrix.dll -reference:$(COMMON_CLASSES_DIR)/QRGS.dll $(OTHER_DIR)/Minimisation.cs -target:library -out:$@
 
 clean:
 	$(RM) *.dll *.exe [Oo]ut*
