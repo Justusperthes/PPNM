@@ -52,7 +52,7 @@ class main{
         double QintegrateResult = my_qspline.Integral();
         WriteLine($"Antiderivative from 0 to {z} using qsplines: {QintegrateResult}");
         double qEvalResult = my_qspline.Evaluate();
-        WriteLine($"The quadratically interpolated value at {z} is {qEvalResult}");
+        WriteLine($"The quadratic interpolated value at {z} is {qEvalResult}");
 
         // qsplines: generate interpolated data points
         for (int i = 0; i < numInterpolatedPoints; i++)
@@ -70,6 +70,28 @@ class main{
         // qsplines: plot original and interpolated data points
         GnuPlotHelper.PlotData(x, y, xInterp, yInterp, qDataFilePath1, qDataFilePath2, qPlotFilePath, "Q Interpolation of Cos(x)");
 
+        // csplines
+        var my_cspline = new cspline(x,y,z);
+        double CintegrateResult = my_cspline.Integral();
+        WriteLine($"Antiderivative from 0 to {z} using csplines: {CintegrateResult}");
+        double cEvalResult = my_cspline.Evaluate();
+        WriteLine($"The cubic interpolated value at {z} is {cEvalResult}");
+
+        // qsplines: generate interpolated data points
+        for (int i = 0; i < numInterpolatedPoints; i++)
+        {
+            xInterp[i] = x[0] + i * step;
+            my_cspline = new cspline(x, y, xInterp[i]);
+            yInterp[i] = my_cspline.Evaluate();
+        }
+
+        // qsplines: define file paths
+        string cDataFilePath1 = "c_data.dat";
+        string cDataFilePath2 = "c_interp_data.dat";
+        string cPlotFilePath = "c_cos_plot.png";
+
+        // qsplines: plot original and interpolated data points
+        GnuPlotHelper.PlotData(x, y, xInterp, yInterp, cDataFilePath1, cDataFilePath2, cPlotFilePath, "C Interpolation of Cos(x)");
 
     }
 }

@@ -10,14 +10,17 @@ all: out.txt; cat $<
 out.txt: main.exe
 	$(RUN) $< > $@
 
-main.exe: main.cs lsplines.dll qsplines.dll GnuPlotHelper.dll
-	$(CSC) -reference:lsplines.dll -reference:qsplines.dll -reference:GnuPlotHelper.dll $<
+main.exe: main.cs lsplines.dll qsplines.dll csplines.dll GnuPlotHelper.dll
+	$(CSC) -reference:lsplines.dll -reference:qsplines.dll -reference:csplines.dll -reference:GnuPlotHelper.dll $<
 
 lsplines.dll : lsplines.cs #; $(MKLIB)
 	$(CSC) -target:library -out:$@ lsplines.cs
 
 qsplines.dll : qsplines.cs #; $(MKLIB)
 	$(CSC) -target:library -out:$@ qsplines.cs
+
+csplines.dll : csplines.cs #; $(MKLIB)
+	$(CSC) -target:library -out:$@ csplines.cs
 
 GnuPlotHelper.dll : main.cs GnuPlotHelper.cs
 	$(CSC) -target:library -out:$@ GnuPlotHelper.cs

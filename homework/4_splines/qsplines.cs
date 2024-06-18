@@ -6,8 +6,7 @@ public class qspline
     private double[] xs, ys, bs, cs;
     private double z;
 
-    public qspline(double[] xs, double[] ys, double z)
-    {
+    public qspline(double[] xs, double[] ys, double z){
         this.xs = xs;
         this.ys = ys;
         this.z = z;
