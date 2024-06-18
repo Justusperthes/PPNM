@@ -14,14 +14,14 @@ public static class main {
         };
         vector a = new vector(-1, -1); // lower left corner
         vector b = new vector(1, 1);   // upper right corner
-        int N = 10000; // number of samples
+        int N = 100000; // number of samples
 
         /* // Debugging output to verify dimensions of vectors 'a' and 'b'
         Console.WriteLine($"Vector a size: {a.size}");
         Console.WriteLine($"Vector b size: {b.size}"); */
         
         var result = mc.plainmc(f, a, b, N);
-        Console.WriteLine($"Estimated integral value with {N} samples: {result.Item1}");
+        Console.WriteLine($"Estimated integral value with {N} samples: {result.Item1}. Should equal PI.");
         Console.WriteLine($"Estimated error: {result.Item2}");
 
         // Make plot of error as function of number of samples
@@ -65,7 +65,7 @@ public static class main {
 
             int M = 1000000; // number of samples
             var result2 = mc.plainmc(g, c, d, M);
-            Console.WriteLine($"Estimated integral value with {M} samples: {result2.Item1}");
+            Console.WriteLine($"Estimated integral value with {M} samples: {result2.Item1}. Should equal approx 1.3932.");
             Console.WriteLine($"Estimated error: {result2.Item2}");
         } catch (IndexOutOfRangeException e) {
             Console.WriteLine($"Error: {e.Message}");
