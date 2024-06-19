@@ -1,0 +1,6 @@
+Antiderivative from 0 to 9 using lsplines: 0.361540792658628
+The linearly interpolated value at 9 is -0.857740656510941
+Antiderivative from 0 to 9 using qsplines: 0.417099516284588
+The quadratic interpolated value at 9 is -0.912236567084337
+Antiderivative from 0 to 9 using csplines: 0.366362249140845
+The cubic interpolated value at 9 is -0.899967318907368

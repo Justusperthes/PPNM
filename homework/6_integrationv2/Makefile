@@ -5,7 +5,7 @@ MKLIB = mcs -target:library -out:$@ $(LIBS) $(CODE)
 CSC = mcs
 RUN = mono
 
-all: erf.gnuplot.png $<
+all: out.txt erf.gnuplot.png; cat $<
 
 erf.gnuplot.png : out.txt erf.data.txt Makefile
 	@echo '\
@@ -23,9 +23,6 @@ out.txt: main.exe
 
 erf.data.txt: main.exe
 	$(RUN) $<
-
-out2: test.exe
-	$(RUN) $< > $@
 
 main.exe: main.cs integ.dll 
 	$(CSC) -reference:integ.dll $<
