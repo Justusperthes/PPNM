@@ -35,23 +35,31 @@ public static class mc
         {
             V *= b[i] - a[i];
         }
-        double sum = 0;
-        var x = new vector(dim);
-        var haltonSequences = new List<Halton>();
+        double sum1 = 0, sum2 = 0;
+        var x1 = new vector(dim);
+        var x2 = new vector(dim);
+        var haltonSequences1 = new List<Halton>();
+        var haltonSequences2 = new List<Halton>();
         for (int k = 0; k < dim; k++)
         {
-            haltonSequences.Add(new Halton(k + 2));
+            haltonSequences1.Add(new Halton(k + 2));
+            haltonSequences2.Add(new Halton(k + 3)); // Using different bases for the second sequence
         }
         for (int i = 0; i < N; i++)
         {
             for (int k = 0; k < dim; k++)
             {
-                x[k] = a[k] + haltonSequences[k].Next() * (b[k] - a[k]);
+                x1[k] = a[k] + haltonSequences1[k].Next() * (b[k] - a[k]);
+                x2[k] = a[k] + haltonSequences2[k].Next() * (b[k] - a[k]);
             }
-            double fx = f(x); sum += fx;
+            double fx1 = f(x1); sum1 += fx1;
+            double fx2 = f(x2); sum2 += fx2;
         }
-        double mean = sum / N;
-        return (mean * V, 0); // <error  not estimated by variance in quasi-random
+        double mean1 = sum1 / N;
+        double mean2 = sum2 / N;
+        double mean = (mean1 + mean2) / 2;
+        double error = Abs(mean1 - mean2);
+        return (mean * V, error * V);
     }
 
     public static void GenerateDataFile(string filename, Func<vector, double> f, vector a, vector b, int N)
@@ -61,7 +69,7 @@ public static class mc
             for (int n = 100; n <= N; n += 1000)
             {
                 var y = plainmc(f, a, b, n);
-                double error = y.Item2;
+                double error = y.Item2; 
                 writer.WriteLine($"{n} {error}"); 
             }
         }
@@ -71,10 +79,12 @@ public static class mc
     {
         using (StreamWriter writer = new StreamWriter(filename))
         {
-            var halton1 = quasirandommc(f, a, b, N);
-            var halton2 = quasirandommc(f, a, b, N);
-            double error = Abs(halton1.Item1 - halton2.Item1);
-            writer.WriteLine($"{N} {error}");
+            for (int n = 100; n <= N; n += 1000)
+            {
+                var y = quasirandommc(f, a, b, n);
+                double error = y.Item2;
+                writer.WriteLine($"{n} {error}");
+            }
         }
     }
 }

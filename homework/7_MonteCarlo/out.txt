@@ -1,5 +1,6 @@
-Estimated integral value with 100000 samples: 3.13952. Should equal PI.
-Estimated error: 0.00519758998921616
-Estimated integral value with 1000000 samples: 1.39346084957389. Should equal approx 1.3932.
-Estimated error: 0.0103734529539929
-Estimated integral value with 100000 quasi-random samples: 3.14116. Should equal PI.
+Estimated integral value with 10000 samples: 3.1308. Should equal PI.
+Estimated error: 0.0164963370479631
+Estimated integral value with 1000000 samples: 1.37068290274727. Should equal approx 1.3932.
+Estimated error: 0.0048031217270382
+Estimated integral value with 10000 quasi-random samples: 3.1398. Should equal PI.
+Estimated quasi-random error with 10000 samples: 0.00119999999999987

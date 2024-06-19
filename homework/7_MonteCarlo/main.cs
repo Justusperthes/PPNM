@@ -17,7 +17,7 @@ public static class main
         };
         vector a = new vector(-1, -1); // lower left corner
         vector b = new vector(1, 1);   // upper right corner
-        int N = 100000; // number of samples
+        int N = 10000; // number of samples
 
         var result = mc.plainmc(f, a, b, N);
         Console.WriteLine($"Estimated integral value with {N} samples: {result.Item1}. Should equal PI.");
@@ -68,9 +68,10 @@ public static class main
             Console.WriteLine($"Estimated integral value with {M} samples: {result2.Item1}. Should equal approx 1.3932.");
             Console.WriteLine($"Estimated error: {result2.Item2}");
 
-            //quasi-random integration hyperspherical
+            //quasi-random integration unit circle
             var quasiResult = mc.quasirandommc(f, a, b, N);
             Console.WriteLine($"Estimated integral value with {N} quasi-random samples: {quasiResult.Item1}. Should equal PI.");
+            Console.WriteLine($"Estimated quasi-random error with {N} samples: {quasiResult.Item2}");
         }
         catch (IndexOutOfRangeException e)
         {
