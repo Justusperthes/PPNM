@@ -44,7 +44,7 @@ public static class mc
         {
             haltonSequences1.Add(new Halton(k + 2));
             haltonSequences2.Add(new Halton(k + 3)); // Using different bases for the second sequence
-        }
+        } 
         for (int i = 0; i < N; i++)
         {
             for (int k = 0; k < dim; k++)
@@ -54,7 +54,7 @@ public static class mc
             }
             double fx1 = f(x1); sum1 += fx1;
             double fx2 = f(x2); sum2 += fx2;
-        }
+        } 
         double mean1 = sum1 / N;
         double mean2 = sum2 / N;
         double mean = (mean1 + mean2) / 2;

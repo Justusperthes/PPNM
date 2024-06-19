@@ -1,9 +1,10 @@
 \
 set terminal pngcairo enhanced font "arial,10" size 800,600 ;\
-set output "linerror.gnuplot.png" ;\
-set xlabel "N" ;\
-set ylabel "1/error^2" ;\
-set title "1/error^2 = k*N" ;\
+set output "comparison.gnuplot.png" ;\
+set xlabel "samples N" ;\
+set ylabel "error" ;\
+set title "Error Comparison: Pseudo-random vs Quasi-random Monte Carlo" ;\
 plot \
-"linerror.data.txt" with lines title "Modified error" \
+"error.data.txt" using 1:2 with lines title "Pseudo-random Error", \
+"quasierror.data.txt" using 1:2 with lines title "Quasi-random Error", \
 

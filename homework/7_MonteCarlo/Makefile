@@ -7,7 +7,7 @@ CSC = mcs
 export MONO_PATH := $(COMMON_CLASSES_DIR)
 RUN = mono --debug
 
-all: error.gnuplot.png linerror.gnuplot.png out.txt
+all: error.gnuplot.png linerror.gnuplot.png comparison.gnuplot.png out.txt
 	cat out.txt
 
 error.gnuplot.png : out.txt error.data.txt Makefile
@@ -30,6 +30,18 @@ linerror.gnuplot.png : out.txt linerror.data.txt Makefile
 	set title "1/error^2 = k*N" ;\
 	plot \
 	"linerror.data.txt" with lines title "Modified error" \
+	' | tee log.gpi | gnuplot
+
+comparison.gnuplot.png : out.txt Makefile
+	@echo '\
+	set terminal pngcairo enhanced font "arial,10" size 800,600 ;\
+	set output "$@" ;\
+	set xlabel "samples N" ;\
+	set ylabel "error" ;\
+	set title "Error Comparison: Pseudo-random vs Quasi-random Monte Carlo" ;\
+	plot \
+	"error.data.txt" using 1:2 with lines title "Pseudo-random Error", \
+	"quasierror.data.txt" using 1:2 with lines title "Quasi-random Error", \
 	' | tee log.gpi | gnuplot
 
 out.txt: main.exe

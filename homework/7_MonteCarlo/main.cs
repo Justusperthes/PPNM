@@ -7,7 +7,7 @@ public static class main
 {
     public static void Main(string[] args)
     {
-        //area of unit circle by Monte Carlo
+        // area of unit circle by Monte Carlo
         Func<vector, double> f = (vector point) =>
         {
             double x = point[0];
@@ -37,7 +37,7 @@ public static class main
             data[i][1] = 1.0 / (data[i][1] * data[i][1]);
         }
 
-        //write modified data to file
+        // write modified data to file
         using (StreamWriter writer = new StreamWriter("linerror.data.txt"))
         {
             foreach (var row in data)
@@ -46,9 +46,29 @@ public static class main
             }
         }
 
+        // Output comparison data for plotting
+        var pseudoRandomErrors = File.ReadAllLines("error.data.txt")
+            .Select(line => line.Split())
+            .Select(parts => new { N = int.Parse(parts[0]), Error = double.Parse(parts[1]) })
+            .ToArray();
+
+        var quasiRandomErrors = File.ReadAllLines("quasierror.data.txt")
+            .Select(line => line.Split())
+            .Select(parts => new { N = int.Parse(parts[0]), Error = double.Parse(parts[1]) })
+            .ToArray();
+
+        using (StreamWriter writer = new StreamWriter("comparison.data.txt"))
+        {
+            writer.WriteLine("N\tPseudoRandomError\tQuasiRandomError");
+            for (int i = 0; i < pseudoRandomErrors.Length; i++)
+            {
+                writer.WriteLine($"{pseudoRandomErrors[i].N}\t{pseudoRandomErrors[i].Error}\t{quasiRandomErrors[i].Error}");
+            }
+        }
+
         try
         {
-            //hyperspherical integral
+            // hyperspherical integral
             Func<vector, double> g = (vector point) =>
             {
                 if (point.size != 3)
@@ -68,7 +88,7 @@ public static class main
             Console.WriteLine($"Estimated integral value with {M} samples: {result2.Item1}. Should equal approx 1.3932.");
             Console.WriteLine($"Estimated error: {result2.Item2}");
 
-            //quasi-random integration unit circle
+            // quasi-random integration unit circle
             var quasiResult = mc.quasirandommc(f, a, b, N);
             Console.WriteLine($"Estimated integral value with {N} quasi-random samples: {quasiResult.Item1}. Should equal PI.");
             Console.WriteLine($"Estimated quasi-random error with {N} samples: {quasiResult.Item2}");
