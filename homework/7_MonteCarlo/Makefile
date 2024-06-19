@@ -47,8 +47,11 @@ main.exe: main.cs vector.dll mc.dll
 vector.dll : $(COMMON_CLASSES_DIR)/vector.cs 
 	$(CSC) -target:library -out:$@ $(COMMON_CLASSES_DIR)/vector.cs
 	
-mc.dll : mc.cs vector.dll
-	$(CSC) -reference:vector.dll -target:library -out:$@ mc.cs
+mc.dll : mc.cs vector.dll Halton.dll
+	$(CSC) -reference:vector.dll -reference:Halton.dll -target:library -out:$@ mc.cs
+
+Halton.dll : Halton.cs
+	$(CSC) -target:library -out:$@ Halton.cs
 
 clean:
 	$(RM) *.dll *.exe [Oo]ut* *.png *.txt

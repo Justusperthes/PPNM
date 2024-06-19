@@ -11,7 +11,7 @@ class main{
         var yy = new vector(1);
         var (xlist,ylist) = RK_integrator.driver(f,(0,10),ystart:yy,h:0.125,acc:0.01,eps:0.01);
 	    for(int i=0;i<xlist.size;i++){
-		    //System.Console.WriteLine($"main: result: {xlist[i]} {ylist[i][0]}");
+		    System.Console.WriteLine($"main: result: {xlist[i]} {ylist[i][0]}");
         }
     }
 }
