@@ -53,6 +53,15 @@ public class vector
         return result;
     }
 
+    public static vector operator /(vector v, double d)
+    {
+        int n = v.size;
+        vector result = new vector(n);
+        for (int i = 0; i < n; i++)
+            result[i] = v[i]/d;
+        return result;
+    }
+
     public double norm()
     {
         double sum = 0;

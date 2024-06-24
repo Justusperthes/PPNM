@@ -6,7 +6,7 @@ class main{
         // Define the function dy/dx = f(x, y)
         Func<double, vector, vector> f = (x, y) =>
         {
-            // Example: simple harmonic oscillator u'' = -u; transform into two first-order ODEs
+            // Example: SHO, u'' = -u; transform into two first-order ODEs
             // Let y[0] = u and y[1] = u', then we have dy[0]/dx = y[1] and dy[1]/dx = -y[0]
             return new vector(y[1], -y[0]);
         };
