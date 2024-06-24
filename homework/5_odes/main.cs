@@ -15,7 +15,7 @@ class main{
         }
     }
 }
-/* 
+/*  
 public static vector f(double x, vector y)
     {
         double u = y[0]; // First component of the vector y is u
