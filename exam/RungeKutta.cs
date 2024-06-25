@@ -4,7 +4,7 @@ using static System.Math;
 public class RungeKutta
 {
     public RungeKutta(){
-
+        //constructor
     }
     // Function to perform one step of the embedded RK method
     // 1 is the lower-order (Euler) method

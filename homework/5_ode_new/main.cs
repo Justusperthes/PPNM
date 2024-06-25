@@ -10,12 +10,13 @@ class main{
             // Let y[0] = u and y[1] = u', then we have dy[0]/dx = y[1] and dy[1]/dx = -y[0]
             return new vector(y[1], -y[0]);
         };
+        RungeKutta my_RKOneStep = new RungeKutta();
 
         // Initial conditions
         vector ystart = new vector(1.0, 0.0); // u(0) = 1, u'(0) = 0
 
         // Solve the ODE from x=0 to x=10
-        var (xlist, ylist) = RungeKutta.driver(f, (0.0, 10.0), ystart);
+        var (xlist, ylist) = my_RKOneStep.driver(f, (0.0, 10.0), ystart);
 
         // Print the results
         for (int i = 0; i < xlist.Count; i++)

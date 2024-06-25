@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using static System.Math;
 public class RungeKutta
 {
+    public RungeKutta(){
+        //constructor
+    }
     // Function to perform one step of the embedded RK method
     // 1 is the lower-order (Euler) method
     // 2 is the higher-order method
@@ -20,25 +23,12 @@ public class RungeKutta
         return (yh, δy);
     }
 
-    // Function to perform one step of the two-step method
-    public static (vector, vector) twostep(
-        Func<double, vector, vector> f, // the function f from dy/dx = f(x, y)
-        double x0,                      // the previous value of the variable
-        vector y0,                      // the previous value y(x0) of the sought function
-        double x1,                      // the current value of the variable
-        vector y1,                      // the current value y(x1) of the sought function
-        double h                        // the step to be taken
-    )
-    {
-        vector y1_prime = f(x1, y1);
-        vector c = (y0 - y1 + y1_prime * (x1 - x0)) / Pow(x1 - x0, 2);
-        vector yh = y1 + y1_prime * h + c * Pow(h, 2);
-        vector δy = c * Pow(h, 2);
-        return (yh, δy);
+    public string WhatClassIsThis(){
+        return "RungeKutta";
     }
 
     // Function to adaptively solve the ODE from start-point a to end-point b
-    public static (List<double>, List<vector>) driver(
+    public (List<double>, List<vector>) driver(
         Func<double, vector, vector> F,  // the function f from dy/dx = f(x, y)
         (double, double) interval,       // (start-point, end-point)
         vector ystart,                   // y(start-point)
@@ -52,31 +42,24 @@ public class RungeKutta
         vector y = ystart.copy();
         var xlist = new List<double> { x };
         var ylist = new List<vector> { y };
+        System.Console.WriteLine("This is one step RK driver");
 
-        // Initial step using rkstep12
-        var (y1, δy1) = rkstep12(F, x, y, h);
-        double x1 = x + h;
-        xlist.Add(x1);
-        ylist.Add(y1);
-
-         do
+        do
         {
-            if (x1 >= b) return (xlist, ylist); // job done
-            if (x1 + h > b) h = b - x1;          // last step should end at b
+            if (x >= b) return (xlist, ylist); // job done
+            if (x + h > b) h = b - x;          // last step should end at b
 
-            var (yh, δy) = twostep(F, x, y, x1, y1, h);
+            var (yh, δy) = rkstep12(F, x, y, h);
             double tol = (acc + eps * yh.norm()) * Sqrt(h / (b - a));
             double err = δy.norm();
 
             if (err <= tol)
             {
                 // accept step
-                x = x1;
-                y = y1;
-                x1 += h;
-                y1 = yh;
-                xlist.Add(x1);
-                ylist.Add(y1);
+                x += h;
+                y = yh;
+                xlist.Add(x);
+                ylist.Add(y);
             }
 
             h *= Min(Pow(tol / err, 0.25) * 0.95, 2); // readjust step-size

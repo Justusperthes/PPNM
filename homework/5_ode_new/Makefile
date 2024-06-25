@@ -20,4 +20,4 @@ RungeKutta.dll: vec.cs RungeKutta.cs
 	$(CSC) -reference:vector.dll -target:library -out:$@ RungeKutta.cs
 
 clean:
-	$(RM) *.dll *.exe
+	$(RM) *.dll *.exe *.txt
