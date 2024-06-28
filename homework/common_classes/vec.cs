@@ -44,6 +44,15 @@ public class vector
         return result;
     }
 
+    public static vector operator *(vector v, int c)
+    {
+        int n = v.size;
+        vector result = new vector(n);
+        for (int i = 0; i < n; i++)
+            result[i] = v[i] * c;
+        return result;
+    }
+
     public static vector operator -(vector v1, vector v2)
     {
         int n = v1.size;

@@ -61,7 +61,9 @@ public class RungeKutta
                 xlist.Add(x);
                 ylist.Add(y);
             }
-
+            else{
+                Console.WriteLine($"Rejected step: h = {h}, x = {x}, y = ({y}), err = {err}, tol = {tol}");
+            }
             h *= Min(Pow(tol / err, 0.25) * 0.95, 2); // readjust step-size
         } while (true);
     }

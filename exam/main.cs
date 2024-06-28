@@ -1,39 +1,92 @@
 using System;
+using static System.Console;
+using static System.Math;
+using System.Linq;
+using System.IO;
 
 class main{
     public static void Main()
     {
-        // Define the function dy/dx = f(x, y)
-        Func<double, vector, vector> f = (x, y) =>
-        
-        {
-            // Example: SHO, u'' = -u; transform into two first-order ODEs
-            // Let y[0] = u and y[1] = u', then we have dy[0]/dx = y[1] and dy[1]/dx = -y[0]
-            return new vector(y[1], -y[0]);
-        };
+        // set potential: "harmonic", "vanderpol", "duffing", "custom"
+        string potentialType = "custom";
+
+        // Region of integration
+        double start = 0.0;
+        double end = 50.0;
+
+        Func<double, vector, vector> selectedPotential;
+        vector ystart;
+
         RungeKutta my_RKOneStep = new RungeKutta();
         RKTwoStep my_RKTwoStep = new RKTwoStep();
+        RKTwoStepExtra my_RKTwoStepExtra = new RKTwoStepExtra();        
 
-        // Initial conditions 
-        vector ystart = new vector(1.0, 0.0); // u(0) = 1, u'(0) = 0
-
-        // Solve the ODE from x=0 to x=10
-        var (xlist1, ylist1) = my_RKOneStep.driver(f, (0.0, 10.0), ystart);
-
-        // Print the results
-        for (int i = 0; i < xlist1.Count; i++)
+        switch (potentialType.ToLower())
         {
-            Console.WriteLine($"x = {xlist1[i]:F2}, y = ({ylist1[i]})");
+            case "harmonic":
+                selectedPotential = TestPotentials.HarmonicOscillator();
+                ystart = new vector(1.0, 0.0); // Initial conditions
+                break;
+
+            case "vanderpol":
+                selectedPotential = TestPotentials.VanDerPolOscillator(5.0);
+                ystart = new vector(2.0, 0.0); // Initial conditions
+                break;
+
+            case "duffing":
+                double delta = 0.2;
+                double alpha = -1.0;
+                double beta = 1.0;
+                double gamma = 0.3;
+                double omega = 1.0;
+                selectedPotential = TestPotentials.DuffingOscillator(delta, alpha, beta, gamma, omega);
+                ystart = new vector(1.0, 0.0); // Initial conditions
+                break;
+
+            case "custom":
+                selectedPotential = CustomPotential();
+                ystart = new vector(1.0, 0.0); //initial conditions
+                break;
+
+            default:
+                WriteLine("Invalid potential type. Choose 'harmonic', 'vanderpol', or 'duffing'.");
+                return;
         }
 
-        // Solve the ODE from x=0 to x=10
-        var (xlist2, ylist2) = my_RKTwoStep.driver(f, (0.0, 10.0), ystart);
-
-        // Print the results
+        // Solve by different methods
+        SolveAndSaveResults(my_RKOneStep, selectedPotential, ystart, start, end, "output_one_step.txt");
+        SolveAndSaveResults(my_RKTwoStep, selectedPotential, ystart, start, end, "output_two_step.txt");
+        SolveAndSaveResults(my_RKTwoStepExtra, selectedPotential, ystart, start, end, "output_two_step_extra.txt");
+        
+        /* // Analytic function
         for (int i = 0; i < xlist2.Count; i++)
         {
-            Console.WriteLine($"x = {xlist2[i]:F2}, y = ({ylist2[i]})");
-        }
+            WriteLine($"x = {xlist2[i]:F2}, y = {Cos(xlist2[i])}");
+        } */
+    }
+    // Define custom potential
+     private static Func<double, vector, vector> CustomPotential()
+    {
+        return (x, y) =>
+        {
+            // Custom potential: nonlinear oscillator
+            double a = -1.0; // Linear term
+            double b = -1.0; // Nonlinear term
+            return new vector(y[1], a * y[0] + b * Pow(y[0], 3));
+        };
+    }
+    private static void SolveAndSaveResults(dynamic solver, Func<double, vector, vector> f, vector ystart, double start, double end, string outputPath)
+    {
+        var result = solver.driver(f, (start, end), ystart);
+        var xlist = result.Item1;
+        var ylist = result.Item2;
 
+        using (StreamWriter sw = new StreamWriter(outputPath))
+        {
+            for (int i = 0; i < xlist.Count; i++)
+            {
+                sw.WriteLine($"{xlist[i]:F2} {ylist[i][0]:F4} {ylist[i][1]:F4}");
+            }
+        }
     }
 }

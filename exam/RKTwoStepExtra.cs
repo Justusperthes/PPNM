@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using static System.Math;
-public class RKTwoStep : RungeKutta
+
+public class RKTwoStepExtra : RungeKutta
 {
-    // Function to perform one step of the two-step method
+    // Function to perform one step of the two-step method with extra evaluation
     public static (vector, vector) twostep(
         Func<double, vector, vector> f, // the function f from dy/dx = f(x, y)
         double x0,                      // the previous value of the variable
@@ -13,14 +14,24 @@ public class RKTwoStep : RungeKutta
         double h                        // the step to be taken
     )
     {
+        double t = x1 + h;
         vector y1_prime = f(x1, y1);
         vector c = (y0 - y1 + y1_prime * (x1 - x0)) / Pow(x1 - x0, 2);
-        vector yh = y1 + y1_prime * h + c * Pow(h, 2);
-        vector δy = c * Pow(h, 2);
-        return (yh, δy);
-    }//twostep
 
-    public string WhatClassIsThis(){
+        vector p2 = y1 + y1_prime * h + c * Pow(h, 2);
+        
+        // Evaluating at t = x1 + h
+        vector f_t_p2 = f(t, p2);
+        vector d = (f_t_p2 - y1_prime - c * 2.0 * (t - x1)) / ( (t - x1) * 2.0 * (t - x0) + Pow(t - x1, 2));
+
+        vector p3 = p2 + d * Pow(h, 2) * (h + x1 - x0); 
+        vector δy = p3 - p2;
+
+        return (p3, δy);
+    }
+
+    public string WhatClassIsThis()
+    {
         return "RKTwoStep";
     }
 
@@ -39,14 +50,14 @@ public class RKTwoStep : RungeKutta
         vector y = ystart.copy();
         var xlist = new List<double> { x };
         var ylist = new List<vector> { y };
-        System.Console.WriteLine("This is two step RK driver");
+        System.Console.WriteLine("This is two step RK driver with extra evaluation");
 
         // Initial step using rkstep12
         var (y1, δy1) = rkstep12(F, x, y, h);
         double x1 = x + h;
         xlist.Add(x1);
         ylist.Add(y1);
-        
+
         do
         {
             if (x1 >= b) return (xlist, ylist); // job done
@@ -66,14 +77,16 @@ public class RKTwoStep : RungeKutta
                 xlist.Add(x1);
                 ylist.Add(y1);
             }
-            else{
+            else
+            {
                 Console.WriteLine($"Rejected step: h = {h}, x = {x1}, y = ({y1}), err = {err}, tol = {tol}");
             }
+
             h *= Min(Pow(tol / err, 0.25) * 0.95, 2); // readjust step-size
-            /* if (h < 1e-10)
+            if (h < 1e-10)
             {
                 throw new Exception("Step size became too small.");
-            } */
+            }
         } while (true);
-    }//two step driver
+    }
 }
