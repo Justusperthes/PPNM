@@ -8,7 +8,7 @@ class main{
     public static void Main()
     {
         // set potential: "harmonic", "vanderpol", "duffing", "custom"
-        string potentialType = "custom";
+        string potentialType = "duffing";
 
         // Region of integration
         double start = 0.0;
@@ -23,7 +23,7 @@ class main{
 
         switch (potentialType.ToLower())
         {
-            case "harmonic":
+            case "harmonic": 
                 selectedPotential = TestPotentials.HarmonicOscillator();
                 ystart = new vector(1.0, 0.0); // Initial conditions
                 break;
