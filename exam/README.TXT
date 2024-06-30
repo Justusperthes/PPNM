@@ -10,4 +10,4 @@ method. It thus extends my RungeKutta solver to use a two-step method, and also 
 with an extra step which is extended in the same manner.
 
 Some potential functions are provided in a separate class TestPotentials. 
-The user can provide a custom potential using the CustomPotential method in the main class. 
+The user can provide a custom potential using the CustomPotential method in the main file. 
