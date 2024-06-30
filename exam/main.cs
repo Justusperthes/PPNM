@@ -70,8 +70,8 @@ class main{
         return (x, y) =>
         {
             // Custom potential: nonlinear oscillator
-            double a = -1.0; // Linear term
-            double b = -1.0; // Nonlinear term
+            double a = -1.0; // linear term
+            double b = -1.0; // nonlinear term
             return new vector(y[1], a * y[0] + b * Pow(y[0], 3));
         };
     }
