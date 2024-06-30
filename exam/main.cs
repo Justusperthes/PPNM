@@ -25,12 +25,12 @@ class main{
         {
             case "harmonic": 
                 selectedPotential = TestPotentials.HarmonicOscillator();
-                ystart = new vector(1.0, 0.0); // Initial conditions
+                ystart = new vector(1.0, 0.0); // initial conditions
                 break;
 
             case "vanderpol":
                 selectedPotential = TestPotentials.VanDerPolOscillator(5.0);
-                ystart = new vector(2.0, 0.0); // Initial conditions
+                ystart = new vector(2.0, 0.0); // initial conditions
                 break;
 
             case "duffing":
@@ -40,7 +40,7 @@ class main{
                 double gamma = 0.3;
                 double omega = 1.0;
                 selectedPotential = TestPotentials.DuffingOscillator(delta, alpha, beta, gamma, omega);
-                ystart = new vector(1.0, 0.0); // Initial conditions
+                ystart = new vector(1.0, 0.0); // initial conditions
                 break;
 
             case "custom":

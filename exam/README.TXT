@@ -7,4 +7,7 @@ My initial ODE integrator was not working properly from Homework 5, so I have ha
 (which I have called "5_ode_new).
 The two-step integrator inherits from the RungeKutta solver from 5_ode_new which implements a one-step
 method. It thus extends my RungeKutta solver to use a two-step method, and also to use a two-step method 
-with an extra step.
+with an extra step which is extended in the same manner.
+
+Some potential functions are provided in a separate class TestPotentials. 
+The user can provide a custom potential using the CustomPotential method in the main class. 

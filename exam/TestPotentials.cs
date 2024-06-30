@@ -19,4 +19,4 @@ public static class TestPotentials{
     {
         return (x, y) => new vector(y[1], gamma * Cos(omega * x) - delta * y[1] - alpha * y[0] - beta * Pow(y[0], 3));
     }
-}  
+}
